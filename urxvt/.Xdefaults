@@ -1,0 +1,45 @@
+URxvt*background: #363636
+URxvt*foreground: #9E8C7A
+
+! BLACK
+*color0: #525252
+*color8: #707070
+
+! RED
+*color1: #B0777B
+*color9: #AA7E87
+
+! GREEN
+*color2: #94A65D
+*color10: #BCC682
+
+! YELLOW
+*color3: #FCD786
+*color11: #ECC386
+
+! BLUE
+*color4: #869AA3
+*color12: #96A8B7
+
+! MAGENTA
+*color5: #9F98B7
+*color13: #A393CE
+
+! CYAN
+*color6: #93A2B9
+*color14: #9BB7CC
+
+! WHITE
+*color7: #A0A0A0
+*color15: #FFFFFF
+
+! fonts
+! run "fc-list" for a list of available fonts
+URxvt*font: xft:DroidSansMono:pixelsize=12
+
+URxvt*scrollBar: False
+URxvt*scrollTtyOutput: False
+URxvt*scrollTtyKeypress: True
+URxvt*secondaryScroll: True
+URxvt*saveLines: 8000
+URxvt*letterSpace: -1
