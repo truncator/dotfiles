@@ -1,0 +1,57 @@
+! color scheme
+URxvt*background: #262626
+URxvt*foreground: #D2C5BC
+! black
+*color0: #525252
+*color8: #707070
+! red
+*color1: #B0777B
+*color9: #AA7E87
+! green
+*color2: #94A65D
+*color10: #BCC682
+! yellow
+*color3: #FCD786
+*color11: #ECC386
+! blue
+*color4: #869AA3
+*color12: #96A8B7
+! magenta
+*color5: #9F98B7
+*color13: #A393CE
+! cyan
+*color6: #93A2B9
+*color14: #9BB7CC
+! white
+*color7: #A0A0A0
+*color15: #FFFFFF
+
+! font
+! run fc-list for a list of available fonts
+URxvt*font: xft:dina:size=9
+
+! spacing
+URxvt*letterSpace: 0
+URxvt*lineSpace: 0
+
+! disable scroll bar
+URxvt*scrollBar: false
+
+! scroll with output
+URxvt*scrollTtyOutput: false
+
+! scroll to the bottom on keypress
+URxvt*scrollTtyKeypress: true
+
+! history length
+URxvt*saveLines: 8000
+
+! cursor
+Xcursor.theme: Vanilla-DMZ-AA
+Xcursor.size: 22
+
+! clickable urls
+URxvt.perl-ext-common: default,matcher
+URxvt.url-launcher: /usr/bin/firefox
+URxvt.matcher.button: 1
+URxvt.colurUL: #4682B4

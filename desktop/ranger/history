@@ -1,0 +1,5 @@
+search etc
+search x11
+rename xorg.conf.catalyst-0
+sudo ranger
+su ranger

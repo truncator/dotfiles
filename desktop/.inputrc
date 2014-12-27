@@ -1,0 +1,12 @@
+# ~/.inputrc
+
+# tab results for partial or no completion
+set show-all-if-ambiguous on
+
+# word movement with ctrl+left / ctrl+right
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+"\e[5C": forward-word
+"\e[5D": backward-word
+"\e\e[C": forward-word
+"\e\e[D": backward-word
