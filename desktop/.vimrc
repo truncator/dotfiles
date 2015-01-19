@@ -11,25 +11,26 @@ set showtabline=2   " always display tabs
 
 set tabstop=4
 set shiftwidth=4
-set shiftround " use multiple of shiftwidth when using '>' or '<'
+set shiftround      " use multiple of shiftwidth when using '>' or '<'
 
 set autoindent
 set smartindent
-set copyindent " copy previous indentation
+set copyindent      " copy previous indentation
 
 set timeoutlen=500
 set ttimeoutlen=0
 
 set relativenumber
+set number
 set nowrap
-set showmatch " show matching parenthesis
-set smarttab  " insert tabs based on shiftwidth
+set showmatch       " show matching parenthesis
+set smarttab        " insert tabs based on shiftwidth
 
-set ignorecase " ignore case when searching
-set smartcase " search is not case-sensitive if pattern is all lowercase
-set hlsearch  " highlight search terms
-set incsearch " show search matches as you type
-set gdefault  " replace globally on line by default
+set ignorecase      " ignore case when searching
+set smartcase       " search is not case-sensitive if pattern is all lowercase
+set hlsearch        " highlight search terms
+set incsearch       " show search matches as you type
+set gdefault        " replace globally on line by default
 
 set history=1000
 set undolevels=1000
@@ -42,6 +43,9 @@ set noerrorbells     " no beeping
 set completeopt-=preview " disable scratch preview
 
 set cinkeys=0{,0},0),:,!^F,o,O,e " remove '#' from column 0 alignment
+
+set splitright       " open vertical split to the right
+set splitbelow       " open horizontal split below
 
 "
 " Remaps
@@ -66,11 +70,9 @@ nnoremap <leader>b "_
 " edit ~/.vimrc (this file!)
 nnoremap <leader>ev :tabnew $MYVIMRC<cr>
 
-" nnoremap <leader><tab> :Scratch<CR>
-
 nnoremap <leader>w :w<CR>
 nnoremap <leader>o :tabnew<CR>:e.<CR>
-nnoremap <leader>q :tabclose<CR>
+nnoremap <leader>q :q<CR>
 nnoremap <leader>x :x<CR>
 nnoremap ? :CtrlP<esc>
 
@@ -78,14 +80,27 @@ nnoremap ? :CtrlP<esc>
 nnoremap H gT
 nnoremap L gt
 
+" split navigation
+nnoremap <C-H> <C-W><C-H>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-Q> :q<CR>
+
 " exit from insert to normal mode
 inoremap jk <ESC>
 inoremap jK <ESC>
 inoremap Jk <ESC>
 inoremap JK <ESC>
 
+" unmap annoying keys
+nnoremap <F1> <nop>
+nnoremap Q <nop>
+nnoremap K <nop>
+
 " switch between header and source files
 map <leader>h :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>
+map <leader>H :vsp %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>
 
 "
 " Auto reload
@@ -105,10 +120,6 @@ if $TERM == "rxvt-unicode-256color"
 	set t_Co=256
 endif
 
-colorscheme gruvbox
-set background=dark
-syntax enable
-
 "
 " Plugins
 "
@@ -122,6 +133,16 @@ Plugin 'gmarik/Vundle.vim'
 
 Plugin 'tikhomirov/vim-glsl'
 Plugin 'kien/ctrlp.vim'
+Plugin 'godlygeek/csapprox'
+
+Plugin 'ajh17/Spacegray.vim'
+Plugin 'Junza/Spink'
 
 call vundle#end()
 filetype plugin indent on
+
+colorscheme spacegray
+"colorscheme Spink
+colorscheme gruvbox
+set background=dark
+syntax enable

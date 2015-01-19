@@ -9,10 +9,16 @@ bspc config focus_by_distance   true
 bspc monitor DVI-1 -d I II III IV V
 bspc monitor HDMI-0 -d VI VII VIII IX X
 
+# application rules
+bspc rule -a Clandestine monitor=DVI-1 follow=off floating=on
+bspc rule -a mpv floating=on
+bspc rule -a gimp floating=on
+bspc rule -a steam floating=on
+
 # pad bar
 bspc config -m HDMI-0 top_padding 20
 
-compton --config /home/truncator/.config/compton/compton.conf -b
+compton --config $HOME/.config/compton/compton.conf -b
 
 # loop
 #if [ -e "$BSPWM_TREE" ] ; then

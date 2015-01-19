@@ -14,6 +14,8 @@ fi
 # reload Xresources
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
+xsetroot -cursor_name left_ptr
+
 # set wallpaper
 feh --bg-fill ~/pictures/wallpapers/wallhaven-4389.jpg
 

@@ -5,26 +5,26 @@ URxvt*foreground: #D2C5BC
 *color0: #525252
 *color8: #707070
 ! red
-*color1: #B0777B
-*color9: #AA7E87
+*color1: #956068
+*color9: #B06d75
 ! green
-*color2: #94A65D
-*color10: #BCC682
+*color2: #86A66A
+*color10: #A3C082
 ! yellow
-*color3: #FCD786
-*color11: #ECC386
+*color3: #E5C386
+*color11: #F3D280
 ! blue
-*color4: #869AA3
+*color4: #869AC3
 *color12: #96A8B7
 ! magenta
-*color5: #9F98B7
-*color13: #A393CE
+*color5: #7F7897
+*color13: #9694B2
 ! cyan
-*color6: #93A2B9
-*color14: #9BB7CC
+*color6: #90C2B4
+*color14: #A6D7CC
 ! white
 *color7: #A0A0A0
-*color15: #FFFFFF
+*color15: #EFEFEF
 
 ! font
 ! run fc-list for a list of available fonts
@@ -45,6 +45,8 @@ URxvt*scrollTtyKeypress: true
 
 ! history length
 URxvt*saveLines: 8000
+
+URxvt*intensityStyles: false
 
 ! cursor
 Xcursor.theme: Vanilla-DMZ-AA
