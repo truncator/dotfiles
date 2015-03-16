@@ -14,10 +14,11 @@ fi
 # reload Xresources
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-xsetroot -cursor_name left_ptr
-
 # set wallpaper
-feh --bg-fill ~/pictures/wallpapers/wallhaven-4389.jpg
+#feh --bg-fill ~/pictures/wallpapers/Go3iW2R.jpg
+
+# monitor
+#xrandr --output HDMI1 --mode 1920x1080 --right-of eDP1
 
 # bar
 . $HOME/.config/bar/bar.sh | bar -B "#ff141414" -g 1920x20+0+0 -f *terminus* &

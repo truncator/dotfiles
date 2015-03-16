@@ -19,9 +19,9 @@ bspc rule -a feh floating=on
 bspc rule -a UE4Editor-Linux floating=on
 
 # pad bar
-bspc config -m eDP1 top_padding 20
+#bspc config -m eDP1 top_padding 20
 
 compton --config $HOME/.config/compton/compton.conf -b
 
-bspc monitor HDMI1 -d I II III IV V
-bspc monitor eDP1 -d VI VII VIII IX X
+#bspc monitor HDMI1 -d I II III IV V
+#bspc monitor eDP1 -d VI VII VIII IX X

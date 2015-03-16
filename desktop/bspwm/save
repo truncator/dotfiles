@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# pipe bspwm state to env variables
-bspc query -T > "$BSPWM_TREE"
-bspc query -H > "$BSPWM_HISTORY"

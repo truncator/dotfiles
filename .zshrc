@@ -100,3 +100,15 @@ cland()
 	urxvt -cd /home/truncator/repos/clandestine/Binary/DebugEditor &
 	svim
 }
+
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=5000
+setopt appendhistory autocd extendedglob nomatch notify
+unsetopt beep
+bindkey -v
+
+zstyle :compinstall filename '/home/truncator/.zshrc'
+
+autoload -Uz compinit
+compinit

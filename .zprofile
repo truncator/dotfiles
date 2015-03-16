@@ -1,9 +1,8 @@
 #
-# ~/.bash_profile
+# ~/.zprofile
 #
 
-. ~/.profile
-[[ -f ~/.bashrc ]] && . ~/.bashrc
+[[ -f ~/.zshrc ]] && . ~/.zshrc
 
 # run startx at login
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
