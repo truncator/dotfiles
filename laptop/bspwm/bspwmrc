@@ -1,0 +1,27 @@
+#!/bin/sh
+
+bspc config border_width        2
+bspc config window_gap         16
+
+bspc config split_ratio         0.50
+bspc config focus_by_distance   true
+
+# application rules
+bspc rule -a Clandestine floating=on
+bspc rule -a mpv floating=on
+bspc rule -a gimp floating=on
+bspc rule -a steam floating=on
+bspc rule -a snes9x-gtk floating=on
+bspc rule -a Screensaver floating=on
+bspc rule -a zathura floating=on
+bspc rule -a floating floating=on
+bspc rule -a feh floating=on
+bspc rule -a UE4Editor-Linux floating=on
+
+# pad bar
+bspc config -m eDP1 top_padding 20
+
+compton --config $HOME/.config/compton/compton.conf -b
+
+bspc monitor HDMI1 -d I II III IV V
+bspc monitor eDP1 -d VI VII VIII IX X

@@ -1,0 +1,80 @@
+! Base16 Twilight
+! Scheme: David Hart (http://hart-dev.com)
+
+#define base00 #1e1e1e
+#define base01 #323537
+#define base02 #464b50
+#define base03 #5f5a60
+#define base04 #838184
+#define base05 #a7a7a7
+#define base06 #c3c3c3
+#define base07 #ffffff
+#define base08 #cf6a4c
+#define base09 #cda869
+#define base0A #f9ee98
+#define base0B #8f9d6a
+#define base0C #afc4db
+#define base0D #7587a6
+#define base0E #9b859d
+#define base0F #9b703f
+
+URxvt*.foreground: base05
+URxvt*.background: base00
+URxvt*.cursorColor: base05
+
+URxvt*.color0: base03
+URxvt*.color1: base08
+URxvt*.color2: base0B
+URxvt*.color3: base0A
+URxvt*.color4: base0D
+URxvt*.color5: base0E
+URxvt*.color6: base0C
+URxvt*.color7: base05
+
+URxvt*.color8: base03
+URxvt*.color9: base08
+URxvt*.color10: base0B
+URxvt*.color11: base0A
+URxvt*.color12: base0D
+URxvt*.color13: base0E
+URxvt*.color14: base0C
+URxvt*.color15: base07
+
+! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
+! use 'shell' template to set these if necessary
+URxvt*.color16: base09
+URxvt*.color17: base0F
+URxvt*.color18: base01
+URxvt*.color19: base02
+URxvt*.color20: base04
+URxvt*.color21: base06
+
+! font
+! run fc-list for a list of available fonts
+URxvt*font: xft:dina:size=9
+
+! spacing
+URxvt*letterSpace: 0
+URxvt*lineSpace: 0
+
+! disable scroll bar
+URxvt*scrollBar: false
+
+! scroll with output
+URxvt*scrollTtyOutput: false
+
+! scroll to the bottom on keypress
+URxvt*scrollTtyKeypress: true
+
+! history length
+URxvt*saveLines: 8000
+
+! cursor
+Xcursor.theme: Vanilla-DMZ-AA
+Xcursor.size: 22
+
+! clickable urls
+URxvt.perl-ext-common: default,matcher
+URxvt.url-launcher: /usr/bin/firefox
+URxvt.matcher.button: 1
+URxvt.colurUL: #4682B4
