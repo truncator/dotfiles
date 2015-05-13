@@ -200,7 +200,7 @@ cland()
 
 gitpush()
 {
-	echo $GITTOKEN | xclip
+	cat $HOME/doc/gittoken.txt | xclip
 	git push origin master
 }
 
