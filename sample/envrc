@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# system-specific variables to be read from various dotfiles
+# this file should be placed in $HOME/.config
+#
+
+SYSTEM="desktop"
+WM="bspwm"
+WALLPAPER="$HOME/pic/wallpaper/swirl_pattern_dark.png"
+WALLPAPER_TILED="true"

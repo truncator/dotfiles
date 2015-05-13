@@ -19,9 +19,25 @@ bspc rule -a feh floating=on
 bspc rule -a UE4Editor-Linux floating=on
 
 # pad bar
-#bspc config -m eDP1 top_padding 20
+bspc config -m HDMI-0 top_padding 20
 
+if [ -f $HOME/.config/envrc ] ; then
+	source $HOME/.config/envrc
+else
+	echo "[WARNING] NO ~/.config/envrc exists."
+fi
+
+if [ ! -z $SYSTEM ] ; then
+	if [[ "$SYSTEM" == "desktop" ]] ; then
+		bspc monitor DVI-1 -d I II III IV V
+		bspc monitor HDMI-0 -d VI VII VIII IX X
+	fi
+
+	if [[ "$SYSTEM" == "laptop" ]] ; then
+		bspc monitor eDP1 -d I II III IV V
+		bspc monitor HDMI1 -d VI VII VIII IX X
+	fi
+fi
+
+# start compositor
 compton --config $HOME/.config/compton/compton.conf -b
-
-#bspc monitor HDMI1 -d I II III IV V
-#bspc monitor eDP1 -d VI VII VIII IX X
