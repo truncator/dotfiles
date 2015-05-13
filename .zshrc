@@ -2,13 +2,50 @@
 # ~/.zshrc
 #
 
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
-autoload -U compinit promptinit colors
+autoload -Uz compinit promptinit colors
 compinit
 promptinit
 colors
+
+#PROMPT="%F{black}[%T]%f %F{green}%n%B@%b%F{green}%m%f %B%F{blue}%~%f %F{green}$%f%b "
+PROMPT=" %B%F{blue}%~%f %F{green}$%f%b "
+
+
+#
+# environment variables
+#
+
+if [[ -z $XDG_DATA_HOME ]] ; then
+	export XDG_DATA_HOME=$HOME/.local/share
+fi
+
+if [[ -z $XDG_CONFIG_HOME ]] ; then
+	export XDG_CONFIG_HOME=$HOME/.config
+fi
+
+if [[ -z $XDG_CACHE_HOME ]] ; then
+	export XDG_CACHE_HOME=$HOME/.cache
+fi
+
+if [[ -z $XDG_DATA_DIRS ]] ; then
+	export XDG_DATA_DIRS=/usr/local/share:/usr/share
+fi
+
+if [[ -z $XDG_CONFIG_DIRS ]] ; then
+	export XDG_CONFIG_DIRS=/etc/xdg
+else
+	export XDG_CONFIG_DIRS=/etc/xdg:$XDG_CONFIG_DIRS
+fi
+
+path=(~/bin $path)
+
+# default editor
+export EDITOR=vim
+
+
+#
+# zsh configuration
+#
 
 # arrow-key style completion
 zstyle ':completion:*' menu select
@@ -16,36 +53,96 @@ zstyle ':completion:*' menu select
 # ignore duplicate history lines
 setopt HIST_IGNORE_DUPS
 
-# history search
-[[ -n "${key[PageUp]}"   ]] && bindkey "${key[PageUp]}"   history-beginning-search-backward
-[[ -n "${key[PageDown]}" ]] && bindkey "${key[PageDown]}" history-beginning-search-forward
+# history file
+HISTFILE=$XDG_CACHE_HOME/.histfile
+HISTSIZE=2000
+SAVEHIST=10000
 
-[[ -n "${key[Home]}"   ]] && bindkey "${key[Home]}"   beginning-of-line
-[[ -n "${key[End]}"    ]] && bindkey "${key[End]}"    end-of-line
-[[ -n "${key[Insert]}" ]] && bindkey "${key[Insert]}" overwrite-mode
-[[ -n "${key[Delete]}" ]] && bindkey "${key[Delete]}" delete-char
-[[ -n "${key[Up]}"     ]] && bindkey "${key[Up]}"     up-line-or-history
-[[ -n "${key[Down]}"   ]] && bindkey "${key[Down]}"   down-line-or-history
-[[ -n "${key[Left]}"   ]] && bindkey "${key[Left]}"   backward-char
-[[ -n "${key[Right]}"  ]] && bindkey "${key[Right]}"  forward-char
+setopt autocd
+setopt histignorealldups
+setopt sharehistory
+setopt extendedglob
+unsetopt beep
 
-bindkey "\e[3~" delete-char
+
+#
+# completion
+#
+
+#zstyle :compinstall filename '/home/truncator/.zshrc'
+zstyle ":completion:*" auto-description "specify: %d"
+zstyle ":completion:*" completer _expand _complete _correct _approximate
+zstyle ":completion:*" format "Completing %d"
+zstyle ":completion:*" group-name ""
+zstyle ":completion:*" menu select=2
+zstyle ":completion:*:default" list-colors ${(s.:.)LS_COLORS}
+zstyle ":completion:*" list-colors ""
+zstyle ":completion:*" list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ":completion:*" matcher-list "" "m:{a-z}={A-Z}" "m:{a-zA-Z}={A-Za-z}" "r:|[._-]=* r:|=* l:|=*"
+zstyle ":completion:*" menu select=long
+zstyle ":completion:*" select-prompt %SScrolling active: current selection at %p%s
+zstyle ":completion:*" verbose true
+zstyle ":completion:*:*:kill:*:processes" list-colors "=(#b) #([0-9]#)*=0=01;31"
+zstyle ":completion:*:kill:*" command "ps -u $USER -o pid,%cpu,tty,cputime,cmd"
+
+
+#
+# keybinds
+#
+
+# vim style keybinds
+bindkey -v
+
+bindkey "$terminfo[khome]" beginning-of-line    # home
+bindkey "$terminfo[kend]"  end-of-line          # end
+bindkey "$terminfo[kich1]" overwrite-mode       # insert
+bindkey "$terminfo[kdch1]" delete-char          # delete
+bindkey "$terminfo[kcuu1]" up-line-or-history   # up
+bindkey "$terminfo[kcud1]" down-line-or-history # down
+bindkey "$terminfo[kcub1]" backward-char        # left
+bindkey "$terminfo[kcuf1]" forward-char         # right
+
+# ctrl-left, ctrl-right
+#bindkey "\e[1;5D" backward-word
+#bindkey "\e[1;5C" forward-word
+
+# ctrl-backspace
+#bindkey "^?" backward-delete-word
+
+# shift-tab
+bindkey "\e[Z" reverse-menu-complete
+
+# ctrl-p
 bindkey "^P" up-line-or-history
 
-PROMPT="%F{black}[%T]%f %F{green}%n%B@%b%F{green}%m%f %B%F{blue}%~%f %F{green}$%f%b "
 
-# default editor
-export EDITOR=vim
-
+#
 # aliases
-alias ..="cd .."
-alias ls="ls -Apoh --color=auto"
-alias please="sudo $(history -p !!)"
-alias svim="sudo -E vim"
-alias gitpw="echo $GITTOKEN | xclip"
+#
 
-export PATH=$HOME/bin:$PATH
-export XDG_CONFIG_HOME=$HOME/.config
+alias ls="ls -Apoh --color=auto"
+alias grep="grep --color=auto"
+alias dmesg="dmesg --color=auto"
+alias svim="sudo -E vim"
+alias ..="cd .."
+
+
+#
+# functions
+#
+
+# expand arbitrary number of ... into appropriate number of ../..
+rationalize_dot()
+{
+	if [[ $LBUFFER = *.. ]] ; then
+		LBUFFER+=/..
+	else
+		LBUFFER+=.
+	fi
+}
+zle -N rationalize_dot
+bindkey . rationalize_dot
+bindkey -M isearch . self-insert
 
 # cd + ls
 cl()
@@ -101,14 +198,10 @@ cland()
 	svim
 }
 
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=5000
-setopt appendhistory autocd extendedglob nomatch notify
-unsetopt beep
-bindkey -v
+gitpush()
+{
+	echo $GITTOKEN | xclip
+	git push origin master
+}
 
-zstyle :compinstall filename '/home/truncator/.zshrc'
-
-autoload -Uz compinit
-compinit
+source /usr/share/doc/pkgfile/command-not-found.zsh

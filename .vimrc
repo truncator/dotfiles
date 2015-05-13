@@ -80,6 +80,8 @@ nnoremap ? :CtrlP<esc>
 " tab navigation
 nnoremap H gT
 nnoremap L gt
+nnoremap <C-h> :tabm -1<CR>
+nnoremap <C-l> :tabm +1<CR>
 
 " exit from insert to normal mode
 inoremap jk <ESC>

@@ -15,10 +15,14 @@ fi
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
 # set wallpaper
-#feh --bg-fill ~/pictures/wallpapers/Go3iW2R.jpg
+# feh --bg-tile $HOME/pic/wallpaper/classy_fabric.png
 
 # monitor
-#xrandr --output HDMI1 --mode 1920x1080 --right-of eDP1
+# xrandr --output HDMI1 --mode 1920x1080 --right-of eDP1
+
+xsetroot -cursor_name left_ptr &
+
+#exec openbox-session
 
 # bar
 . $HOME/.config/bar/bar.sh | bar -B "#ff141414" -g 1920x20+0+0 -f *terminus* &
