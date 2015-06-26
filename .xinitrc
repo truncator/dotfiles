@@ -30,10 +30,26 @@ if [ ! -z $WALLPAPER ] && [ ! -z $WALLPAPER_TILED ] ; then
 	fi
 fi
 
-if [ ! -z $SYSTEM ] && [[ "$SYSTEM" == "laptop" ]] ; then
-	xrandr --output HDMI1 --mode 1920x1080 --right-of eDP1
+if [ ! -z $SYSTEM ] ; then
+	if [[ "$SYSTEM" == "laptop" ]] ; then
+		xrandr --output HDMI1 --mode 1920x1080 --right-of eDP1
+	fi
+
+	if [[ "$SYSTEM" == "desktop" ]] ; then
+		xrandr --output DVI-1 --mode 1920x1080 --rate 144.00
+	fi
 fi
 
+# set screen blank to 30 mins
+xset s off
+xset dpms 1800 1800 1800
+
+# rebind caps lock to ctrl
+setxkbmap -option ctrl:nocaps
+
+xsetroot -cursor_name left_ptr &
+
+# start window manager
 if [ ! -z $WM ] ; then
 	if [[ $WM == "openbox" ]] ; then
 		exec openbox-session
@@ -48,5 +64,3 @@ if [ ! -z $WM ] ; then
 		exec $HOME/.config/bspwm/wm
 	fi
 fi
-
-xsetroot -cursor_name left_ptr &

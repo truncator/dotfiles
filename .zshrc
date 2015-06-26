@@ -115,6 +115,8 @@ bindkey "\e[Z" reverse-menu-complete
 # ctrl-p
 bindkey "^P" up-line-or-history
 
+bindkey "^R" history-incremental-search-backward
+
 
 #
 # aliases
@@ -124,7 +126,7 @@ alias ls="ls -Apoh --color=auto"
 alias grep="grep --color=auto"
 alias dmesg="dmesg --color=auto"
 alias svim="sudo -E vim"
-alias ..="cd .."
+alias tmux="tmux -2"
 
 
 #
@@ -135,7 +137,9 @@ alias ..="cd .."
 rationalize_dot()
 {
 	if [[ $LBUFFER = *.. ]] ; then
-		LBUFFER+=/..
+		LBUFFER+=/../
+	elif [[ $LBUFFER = *../ ]] ; then
+		LBUFFER+=../
 	else
 		LBUFFER+=.
 	fi
@@ -204,4 +208,5 @@ gitpush()
 	git push origin master
 }
 
+# search for packages following a missing command
 source /usr/share/doc/pkgfile/command-not-found.zsh

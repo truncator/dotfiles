@@ -54,11 +54,11 @@ super + ctrl + {h,j,k,l}
 super + ctrl + {_,shift + }space
 	bspc {window -p cancel,desktop -c}
 
-#super + alt + {h,j,k,l}
-#	bspc window -e {left -10,down +10,up -10,right +10}
+super + alt + {h,j,k,l}
+	bspc window -e {left -20,down +20,up -20,right +20}
 
-#super + alt + shift + {h,j,k,l}
-#	bspc window -e {right -10,up +10,down -10,left +10}
+super + alt + shift + {h,j,k,l}
+	bspc window -e {right -20,up +20,down -20,left +20}
 
 super + ctrl + {1-9}
 	bspc window -r 0.{1-9}
@@ -66,8 +66,8 @@ super + ctrl + {1-9}
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,window -d} ^{1-9,10}
 
-super + alt + {h,l}
-	bspc monitor -f {prev,next}
+#super + alt + {h,l}
+#	bspc monitor -f {prev,next}
 
 ~button1
 	bspc pointer -g focus

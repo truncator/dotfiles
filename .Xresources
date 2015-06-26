@@ -1,57 +1,29 @@
-! Base16 Twilight
-! Scheme: David Hart (http://hart-dev.com)
+URxvt*.background: #151B1A
+URxvt*.foreground: #8FA388
+!URxvt*.foreground: #7E9982
+URxvt*.cursorColor: #9E6438
 
-#define base00 #1e1e1e
-#define base01 #323537
-#define base02 #464b50
-#define base03 #5f5a60
-#define base04 #838184
-#define base05 #a7a7a7
-#define base06 #c3c3c3
-#define base07 #ffffff
-#define base08 #cf6a4c
-#define base09 #cda869
-#define base0A #f9ee98
-#define base0B #8f9d6a
-#define base0C #afc4db
-#define base0D #7587a6
-#define base0E #9b859d
-#define base0F #9b703f
-
-URxvt*.foreground: base05
-URxvt*.background: base00
-URxvt*.cursorColor: base05
-
-URxvt*.color0: base03
-URxvt*.color1: base08
-URxvt*.color2: base0B
-URxvt*.color3: base0A
-URxvt*.color4: base0D
-URxvt*.color5: base0E
-URxvt*.color6: base0C
-URxvt*.color7: base05
-
-URxvt*.color8: base03
-URxvt*.color9: base08
-URxvt*.color10: base0B
-URxvt*.color11: base0A
-URxvt*.color12: base0D
-URxvt*.color13: base0E
-URxvt*.color14: base0C
-URxvt*.color15: base07
-
-! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
-! use 'shell' template to set these if necessary
-URxvt*.color16: base09
-URxvt*.color17: base0F
-URxvt*.color18: base01
-URxvt*.color19: base02
-URxvt*.color20: base04
-URxvt*.color21: base06
+URxvt*.color0: #2E2B38
+URxvt*.color1: #984E66
+URxvt*.color2: #7A8C54
+URxvt*.color3: #9E6438
+URxvt*.color4: #395667
+URxvt*.color5: #9D916B
+URxvt*.color6: #536556
+URxvt*.color7: #828181
+URxvt*.color8: #474159
+URxvt*.color9: #A86D56
+URxvt*.color10: #9FB274
+URxvt*.color11: #B29F5E
+URxvt*.color12: #507A91
+URxvt*.color13: #B89855
+URxvt*.color14: #7E9982
+URxvt*.color15: #BDBDA4
 
 ! font
 ! run fc-list for a list of available fonts
-URxvt*font: xft:dina:size=9
+URxvt*font: xft:Tamsyn::pixelsize=19:style=regular:antialias=false
+URxvt*boldFont: xft:Tamsyn:pixelsize=19:style=bold:antialias=false
 
 ! spacing
 URxvt*letterSpace: 0
