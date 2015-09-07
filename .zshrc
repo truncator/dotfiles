@@ -98,6 +98,8 @@ alias grep="grep --color=auto"
 alias dmesg="dmesg --color=auto"
 alias svim="sudo -E vim"
 alias tmux="tmux -2"
+alias am="alsamixer"
+alias mv="mv --no-clobber"
 
 
 #
@@ -177,6 +179,11 @@ gitpush()
 {
 	cat $HOME/doc/gittoken.txt | xclip
 	git push origin master
+}
+
+scrots()
+{
+	cd ~/pic/scrot && scrot -s
 }
 
 # search for packages following a missing command

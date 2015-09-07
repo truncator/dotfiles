@@ -95,6 +95,9 @@ super + d
 super + Escape
 	pkill -USR1 -x sxhkd
 
+super + {Up,Down}
+	amixer sset Master {1%+,1%-} unmute
+
 XF86Audio{Raise,Lower}Volume
 	pactl set-sink-volume 1 {+1%,-1%}
 	pactl set-sink-mute 1 0

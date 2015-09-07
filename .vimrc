@@ -111,6 +111,9 @@ map <leader>H :vsp %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>
 
 cmap w!! w !sudo tee > /dev/null %
 
+nnoremap <F10> :set invpaste paste?<CR>
+set pastetoggle=<F10>
+
 "
 " Auto reload
 "
@@ -147,10 +150,54 @@ else
 	map <C-l> <C-w>l
 endif
 
-" enable 256 color support
+" set color support
 if $TERM == "rxvt-unicode-256color"
-	set t_Co=256
+	set t_Co=16
 endif
+
+" create a hpp/cpp class pair based on a simple template
+function! s:CreateCppClass(name)
+	let header_filename = a:name . ".hpp"
+	let source_filename = a:name . ".cpp"
+
+	if filereadable(header_filename) || filereadable(source_filename)
+		echoerr "Error: class file already exists."
+		return
+	endif
+
+	execute ":tabnew " . source_filename
+	execute ":vsp " . header_filename
+
+	execute "normal! i#pragma once\<ESC>o"
+	execute "normal! o"
+	execute "normal! iclass " . a:name . "\<ESC>o"
+	execute "normal! i{\<ESC>o"
+	execute "normal! ipublic:\<C-d>\<ESC>o"
+	execute "normal! i\<TAB>" . a:name . "();\<ESC>o"
+	execute "normal! i\<TAB>~" . a:name . "();\<ESC>o"
+	execute "normal! o"
+	execute "normal! iprivate:\<ESC>o"
+	execute "normal! i};"
+	:w
+
+	execute "normal! \<C-w>l"
+
+	execute "normal! i#include \"" . header_filename . "\"\<ESC>o"
+	execute "normal! o"
+	execute "normal! i" . a:name . "::" . a:name . "()\<ESC>o"
+	execute "normal! i{\<ESC>o"
+	execute "normal! i}\<ESC>o"
+	execute "normal! o"
+	execute "normal! i" . a:name . "::~" . a:name . "()\<ESC>o"
+	execute "normal! i{\<ESC>o"
+	execute "normal! i}"
+	:w
+
+	execute "normal! \<C-w>h"
+	execute "normal! k"
+
+endfunction
+command! -nargs=1 CppClass :call s:CreateCppClass("<args>")
 
 "
 " Plugins
@@ -176,9 +223,9 @@ Plugin 'antlypls/vim-colors-codeschool'
 Plugin 'gcavallanti/vim-noscrollbar.git'
 
 Plugin 'kien/ctrlp.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-easytags'
+"Plugin 'Valloric/YouCompleteMe'
+"Plugin 'xolox/vim-misc'
+"Plugin 'xolox/vim-easytags'
 
 "Plugin 'file:///home/trn/repos/cppclass'
 
@@ -186,7 +233,8 @@ call vundle#end()
 filetype plugin indent on
 
 " enable ctrlp tag searching
-let g:ctrlp_extensions = ['tag']
+"let g:ctrlp_extensions = ['tag']
+let g:ctrlp_working_path_mode=0
 
 " status line with scrollbar
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %{noscrollbar#statusline(20,'-','#')}
