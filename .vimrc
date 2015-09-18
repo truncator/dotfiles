@@ -25,6 +25,8 @@ set ttimeoutlen=0
 set nowrap
 set textwidth=0
 set wrapmargin=0
+set sidescroll=1
+set sidescrolloff=8
 " set formatoptions-=t
 
 set number

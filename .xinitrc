@@ -61,6 +61,6 @@ if [ ! -z $WM ] ; then
 
 		# bspwm
 		sxhkd &
-		exec $HOME/.config/bspwm/wm
+		exec $HOME/.config/bspwm/run
 	fi
 fi
