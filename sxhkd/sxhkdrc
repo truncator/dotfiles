@@ -89,7 +89,7 @@ super + Return
 	urxvt
 
 super + d
-	dmenu_run -q -i -s 0 -o 0.95 -dim 0.3 -l 5 -w 400 -h 20 -p \> -x 760 -y 480 -fn "tamsyn-12:normal" -nb "#161616" -nf "#888888" -sb "#557744" -sf "#cccccc"
+	dmenu_wrapper
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -107,8 +107,5 @@ XF86AudioMute
 	pactl set-sink-mute 1 toggle
 	#amixer -D pulse set Master toggle
 
-# loop
-#super + alt + {_,shift + }Escape
-#	{sudo save; \
-#		bspc quit,\
-#	bspc quit 1}
+super + alt + Escape
+	bspc quit

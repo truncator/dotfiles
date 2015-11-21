@@ -8,10 +8,12 @@ promptinit
 colors
 
 #PROMPT="%F{black}[%T]%f %F{green}%n%B@%b%F{green}%m%f %B%F{blue}%~%f %F{green}$%f%b "
+#PROMPT=$'\n'" %B%F{blue}%~%f %F{green}$%f%b "
+precmd() { print "" }
 PROMPT=" %B%F{blue}%~%f %F{green}$%f%b "
 
 # default editor
-export EDITOR=vim
+export EDITOR=nvim
 
 
 #
@@ -188,3 +190,5 @@ scrots()
 
 # search for packages following a missing command
 source /usr/share/doc/pkgfile/command-not-found.zsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

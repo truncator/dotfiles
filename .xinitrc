@@ -2,7 +2,6 @@
 #
 # ~/.xinitrc
 #
-# Executed by startx (run your window manager from here)
 
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	for f in /etc/X11/xinit/xinitrc.d/* ; do
@@ -21,15 +20,7 @@ else
 	echo "[WARNING] No ~/.config/envrc exists."
 fi
 
-# set wallpaper based on ~/.config/envrc
-if [ ! -z $WALLPAPER ] && [ ! -z $WALLPAPER_TILED ] ; then
-	if [[ "$WALLPAPER_TILED" == "true" ]] ; then
-		feh --bg-tile $WALLPAPER
-	else
-		feh --bg-fill $WALLPAPER
-	fi
-fi
-
+# handle dual monitors
 if [ ! -z $SYSTEM ] ; then
 	if [[ "$SYSTEM" == "laptop" ]] ; then
 		xrandr --output HDMI1 --mode 1920x1080 --right-of eDP1
@@ -40,6 +31,19 @@ if [ ! -z $SYSTEM ] ; then
 	fi
 fi
 
+# set wallpaper based on ~/.config/envrc
+if [ ! -z $WALLPAPER ] && [ ! -z $WALLPAPER_TILED ] && [ ! -z $WALLPAPER_SOLID ] && [ ! -z $WALLPAPER_COLOR ] ; then
+	if [[ "$WALLPAPER_SOLID" == "true" ]] ; then
+		hsetroot -solid "$WALLPAPER_COLOR"
+	else
+		if [[ "$WALLPAPER_TILED" == "true" ]] ; then
+			feh --bg-tile $WALLPAPER
+		else
+			feh --bg-fill $WALLPAPER
+		fi
+	fi
+fi
+
 # set screen blank to 30 mins
 xset s off
 xset dpms 1800 1800 1800
@@ -47,7 +51,10 @@ xset dpms 1800 1800 1800
 # rebind caps lock to ctrl
 setxkbmap -option ctrl:nocaps
 
-xsetroot -cursor_name left_ptr &
+# 250ms key repeate delay, 45 keys/sec
+xset r rate 250 45
+
+xsetroot -cursor_name left_ptr
 
 # start window manager
 if [ ! -z $WM ] ; then
@@ -56,11 +63,8 @@ if [ ! -z $WM ] ; then
 	fi
 
 	if [[ $WM == "bspwm" ]] ; then
-		# bar
-		. $HOME/.config/bar/bar.sh | bar -B "#ff141414" -g 1920x20+0+0 -f *terminus* &
-
 		# bspwm
-		sxhkd &
-		exec $HOME/.config/bspwm/run
+		sxhkd -n &
+		exec bspwm
 	fi
 fi

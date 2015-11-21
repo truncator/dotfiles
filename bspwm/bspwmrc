@@ -1,22 +1,27 @@
 #!/bin/sh
 
 bspc config border_width       2
-bspc config window_gap         4
+bspc config window_gap         8
 
 bspc config split_ratio         0.50
 bspc config focus_by_distance   true
+
+#bspc config remove_unplugged_monitors true
 
 # application rules
 bspc rule -a Clandestine floating=on
 bspc rule -a mpv floating=on
 bspc rule -a gimp floating=on
-bspc rule -a steam floating=on
+bspc rule -a steam floating=on follow=off focus=off
 bspc rule -a snes9x-gtk floating=on
 bspc rule -a Screensaver floating=on
 bspc rule -a zathura floating=on
 bspc rule -a floating floating=on
 bspc rule -a feh floating=on
 bspc rule -a UE4Editor-Linux floating=on
+bspc rule -a hscfi floating=on focus=on desktop=1
+
+#bspc config external_rules_command $HOME/.config/bspwm/rules
 
 # pad bar
 bspc config -m HDMI-0 top_padding 20
@@ -24,7 +29,7 @@ bspc config -m HDMI-0 top_padding 20
 if [ -f $HOME/.config/envrc ] ; then
 	source $HOME/.config/envrc
 else
-	echo "[WARNING] NO ~/.config/envrc exists."
+	echo "[WARNING] ~/.config/envrc does not exist."
 fi
 
 if [ ! -z $SYSTEM ] ; then
@@ -41,3 +46,5 @@ fi
 
 # start compositor
 compton --config $HOME/.config/compton/compton.conf -b
+
+bar &

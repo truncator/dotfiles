@@ -33,10 +33,8 @@ fi
 
 path=(~/bin $path)
 
-# ssh keys
-#export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-#ssh-add ~/.ssh/id_rsa &>/dev/null
-#ssh-add ~/.ssh/id_rsa_git &>/dev/null
+# run mpd if not already running
+[ ! -s ~/.config/mpd/pid ] && mpd ~/.config/mpd
 
 # run startx at login
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec ssh-agent startx
