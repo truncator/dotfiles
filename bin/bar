@@ -1,0 +1,62 @@
+#!/bin/bash
+
+BAR_FIFO="/tmp/bar-fifo"
+
+HEIGHT=20
+LINE_HEIGHT=8
+FONT="DejaVu Sans-10.5"
+COLOR_FG="#ff878b91"
+COLOR_BG="#ff1d2024"
+COLOR_ACTIVE="#ff676b71"
+COLOR_INACTIVE="#ff272b31"
+
+BLOCK="              "
+
+bar_info()
+{
+	while read -r line; do
+		case $line in
+			T*)
+				line=${line#?}
+				title="%{F$COLOR_FG}  ${line/${USER}@${HOSTNAME}:/${TERMINAL}: }"
+				;;
+			W*)
+				wm_info=""
+				set -- ${line#?}
+				IFS=":"
+				while [ $# -gt 0 ] ; do
+					item="$1"
+					name="${item#?}"
+					case "$item" in
+						#[m]*) wm_info=" ${wm_info}               " ;;
+						#[M]*) wm_info=" ${wm_info}               " ;;
+						[OFU]*) wm_info=" ${wm_info}%{U$COLOR_ACTIVE}%{+u}${BLOCK}%{-u}   " ;;
+						[ofu]*) wm_info=" ${wm_info}%{U$COLOR_INACTIVE}%{+u}${BLOCK}%{-u}   " ;;
+					esac
+					shift
+				done
+				wm_info="$wm_info       "
+				;;
+		esac
+
+		clock="$(date "+%a  %b %d  %H:%M" | awk '{print tolower($0)}') "
+		printf "%s\n" "%{l}${title} %{c}${wm_info} %{r}${clock}"
+	done
+}
+
+if [[ $(pgrep -cx bar) -gt 1 ]]; then
+	printf "%s\n" "Bar is already running." >&2
+	exit 1
+fi
+
+trap "trap - TERM; kill 0" INT TERM QUIT EXIT
+
+[[ -e "$BAR_FIFO" ]] && rm "$BAR_FIFO"
+mkfifo "$BAR_FIFO"
+
+bspc control --subscribe > "$BAR_FIFO" &
+xtitle -sf "T%s" -t 100 > "$BAR_FIFO" &
+
+cat "$BAR_FIFO" | bar_info | lemonbar -p -g 1920x"$HEIGHT"+0+0 -f "$FONT" -F "$COLOR_ACTIVE" -B "$COLOR_BG" -u "$LINE_HEIGHT" &
+
+wait

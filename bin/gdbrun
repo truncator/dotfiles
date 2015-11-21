@@ -1,0 +1,20 @@
+#
+# Automatically run and quit upon successful termination.
+# Based on http://stackoverflow.com/a/13298405/4354008
+#
+
+handle SIGINT  pass nostop noprint
+handle SIGQUIT pass nostop noprint
+handle SIGUSR1 pass nostop noprint
+handle SIGUSR2 pass nostop noprint
+
+# Set unusable number as exit code.
+set $_exitcode = -1
+
+# Run executable normally.
+run
+
+# Check if exit code was modified.
+if $_exitcode != -1
+	quit
+end
