@@ -5,7 +5,7 @@
 " Auto reload
 augroup myvimrc
     au!
-    au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,.nvimrc,_nvimrc,nvimrc,init.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+    au BufWritePost .vimrc,_vimrc,vimrc,.nvimrc,_nvimrc,nvimrc,init.vim so $MYVIMRC
 augroup END
 
 
