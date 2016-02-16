@@ -223,10 +223,26 @@ function! SetMakePrg()
     endif
 endfunction
 
+function! RunBinary(headless)
+    let l:run_command = ""
+    if filereadable("run.sh")
+        let l:run_command = "./run.sh"
+    else
+        let l:dir_name = fnamemodify(getcwd(), ':t')
+        let l:run_command = "./bin/" . l:dir_name
+    endif
+
+    if (a:headless)
+        execute ":Dispatch!" run_command
+    else
+        execute ":Dispatch" run_command
+    endif
+endfunction
+
 nnoremap <silent> <F5> :call SetMakePrg()<CR> :Make<CR>
 nnoremap <F6> :Make!<CR>
-nnoremap <F7> :Dispatch ./run.sh<CR>
-nnoremap <F8> :Dispatch! ./run.sh<CR>
+nnoremap <F7> :call RunBinary(0)<CR>
+nnoremap <F8> :call RunBinary(1)<CR>
 
 " terminal
 tnoremap jk <C-\><C-n>
@@ -266,40 +282,6 @@ else
 	map <C-k> <C-w>k
 	map <C-l> <C-w>l
 endif
-
-function! g:UltiSnips_Complete()
-	call UltiSnips#ExpandSnippetOrJump()
-	if g:ulti_expand_or_jump_res == 0
-		if pumvisible()
-			return "\<C-N>"
-		else
-			return "\<TAB>"
-		endif
-	endif
-
-	return ""
-endfunction
-
-function! g:UltiSnips_Reverse()
-	call UltiSnips#JumpBackwards()
-	if g:ulti_jump_backwards_res == 0
-		return "\<C-P>"
-	endif
-
-	return ""
-endfunction
-
-function! RunBinary()
-	let b:current_dir = getcwd()
-	let b:executable_name = fnamemodify(getcwd(), ':t')
-	execute ":silent cd bin/debug"
-	execute ":silent ! ./" . b:executable_name
-	execute ":silent cd " . b:current_dir
-endfunction
-
-function! GetBinaryName()
-	return fnamemodify(getcwd(), ':t')
-endfunction
 
 function! CppGrep(arg)
 	let l:grep_cmd = "grep -F --color '" . a:arg . "' **/*.hpp **/*.cpp"
