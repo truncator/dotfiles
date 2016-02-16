@@ -22,7 +22,7 @@ fi
 
 # handle dual monitors
 if [ ! -z $SYSTEM ] ; then
-	if [[ "$SYSTEM" == "laptop" ]] ; then
+	if [[ "$SYSTEM" == "laptop_dual" ]] ; then
 		xrandr --output HDMI1 --mode 1920x1080 --right-of eDP1
 	fi
 
@@ -64,7 +64,7 @@ if [ ! -z $WM ] ; then
 
 	if [[ $WM == "bspwm" ]] ; then
 		# bspwm
-		sxhkd -n &
+		sxhkd &
 		exec bspwm
 	fi
 fi

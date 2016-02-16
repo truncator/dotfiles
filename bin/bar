@@ -39,8 +39,10 @@ bar_info()
 				;;
 		esac
 
+		battery="$(acpi -b | awk '{print $4}' | cut -b -3)"
 		clock="$(date "+%a  %b %d  %H:%M" | awk '{print tolower($0)}') "
-		printf "%s\n" "%{l}${title} %{c}${wm_info} %{r}${clock}"
+
+		printf "%s\n" "%{l}${title} %{c}${wm_info} %{r}${battery} | ${clock}"
 	done
 }
 

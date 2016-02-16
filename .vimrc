@@ -5,7 +5,7 @@
 " Auto reload
 augroup myvimrc
     au!
-    au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,.nvimrc,_nvimrc,nvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+    au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,.nvimrc,_nvimrc,nvimrc,init.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 
 
@@ -15,72 +15,28 @@ augroup END
 
 call plug#begin('~/.vim/bundle')
 
-"Plug 'morhetz/gruvbox'
-"Plug 'yamafaktory/lumberjack.vim'
-"Plug 'ajh17/spacegray.vim'
-"Plug 'chriskempson/base16-vim'
-"Plug 'justincampbell/vim-railscasts'
-"Plug 'duythinht/vim-coffee'
-"Plug 'antlypls/vim-colors-codeschool'
-Plug 'junegunn/seoul256.vim'
-
-Plug 'tikhomirov/vim-glsl'
-Plug 'gcavallanti/vim-noscrollbar'
-Plug 'ap/vim-buftabline'
+Plug 'chriskempson/base16-vim'
 "Plug 'jeaye/color_coded'
+Plug 'tikhomirov/vim-glsl'
+Plug 'neovimhaskell/haskell-vim'
 
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 
+"Plug 'valloric/youcompleteme'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'haya14busa/incsearch.vim'
 Plug 'bkad/camelcasemotion'
-Plug 'valloric/youcompleteme'
 Plug 'jez/a.vim'
 
-"Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 
-Plug 'sirver/ultisnips'
-"Plug 'honza/vim-snippets'
-
-"Plug 'xolox/vim-misc'
-"Plug 'xolox/vim-easytags'
-"Plug 'jeetsukumaran/vim-buffergator'
-
-Plug 'osyo-manga/vim-over'
-Plug 'haya14busa/incsearch.vim'
-
 call plug#end()
-
-" enable ctrlp tag searching
-"let g:ctrlp_extensions = ['tag']
-"let g:ctrlp_working_path_mode='r'
-"let g:ctrlp_custom_ignore = {
-"	\ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
-"	\ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
-"\}
-"autocmd BufNewFile * :CtrlPClearCache
-"let g:ctrlp_switch_buffer="ETVH"
-"let g:ctrlp_show_hidden=0
-
-" status line with scrollbar
-set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %{noscrollbar#statusline(30,'-','O')}
 
 let g:ycm_extra_conf_globlist = ['~/repos/*','!~/*']
 let g:ycm_key_list_selection_completion=['<TAB>', '<Down>']
 let g:ycm_key_list_previous_completion=['<S-TAB>', '<Up>']
-
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
-let g:UltiSnipsJumpForwardTrigger="<TAB>"
-let g:UltiSnipsListSnippets="<C-e>"
-let g:UltiSnipsJumpBackwardTrigger="<S-TAB>"
-
-au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-au BufEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
-" this mapping Enter key to <C-y> to chose the current highlight item
-" and close the selection list, same as other IDEs.
-" CONFLICT with some plugins like tpope/Endwise
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 nnoremap <silent><F4> :OverCommandLine<CR>
 vnoremap <silent><F4> <Esc> :OverCommandLine<CR>
@@ -102,20 +58,15 @@ map g# <Plug>(incsearch-nohl-g#)
 
 syntax enable
 set background=dark
-"let g:seoul256_background=235
-colorscheme standard
-
-" set color support
-"if $TERM == "rxvt-unicode-256color"
-"	set t_Co=16
-"endif
+let base16colorspace=256
+colorscheme base16-ocean
 
 " hide ~ on nontext lines
 hi NonText ctermfg=black
 
 
 "
-" vim options
+" options
 "
 
 "set nocompatible " use vim settings, not vi
@@ -124,10 +75,9 @@ set showmode        " show editor mode
 set mouse=a         " enable mouse if terminal supports it
 set cursorline      " underline current line
 set showcmd         " show command in last line of screen
-"set ttyfast
 set ruler           " display line/col numbers
-set laststatus=2    " always display status bar
-set showtabline=2   " always display tabs
+set laststatus=2
+set showtabline=1
 
 set hidden
 set switchbuf=useopen,usetab
@@ -137,7 +87,7 @@ set splitright
 set tabstop=4
 set shiftwidth=4
 set shiftround " use multiple of shiftwidth when using '>' or '<'
-set noexpandtab
+set expandtab
 
 set autoindent
 set smartindent
@@ -171,7 +121,7 @@ set gdefault  " replace globally on line by default
 set history=1000
 set undolevels=1000
 set undofile         " store undo changes in .un file
-set wildignore=*.swp,*.un`~,*.o,*.d
+set wildignore=*.swp,*.un\~,*.o,*.d
 set title            " change terminal title
 set visualbell       " no beeping
 set noerrorbells     " no beeping
@@ -180,11 +130,10 @@ set completeopt-=preview " disable scratch preview
 
 set cino+=(0
 
-"set cinkeys=0{,0},0),:,!^F,o,O,e " remove '#' from column 0 alignment
-
 set clipboard=unnamed
 
-set makeprg=./build.sh
+"set makeprg=./build.sh
+set makeprg=make
 
 filetype on
 filetype plugin on
@@ -242,6 +191,7 @@ nmap <silent> e <Plug>CamelCaseMotion_e
 
 " FZF
 nnoremap <C-_> :call fzf#run({'down': '20%', 'sink': 'edit'})<CR>
+nnoremap ? :Tags<CR>
 
 " exit from insert to normal mode
 inoremap jk <ESC>
@@ -252,20 +202,12 @@ nnoremap x "_x
 " switch between header and source files
 nnoremap <leader>h :A<CR>
 nnoremap <leader>H :AV<CR>
-"map <leader>h :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>
-"map <leader>H :vert sb %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>
 
 cmap w!! w !sudo tee > /dev/null %
 
 nnoremap <F10> :set invpaste paste?<CR>
 set pastetoggle=<F10>
 
-"nnoremap <F5> :Dispatch make -C ./build/linux64 -j8 && cd bin/debug && ./game && cd ../../<CR>
-"nnoremap <F6> :Dispatch make -C ./build/linux64 -j8<CR>
-"nnoremap <F9> :Dispatch cmake -H. -B./build/linux64 -DCMAKE_BUILD_TYPE=Debug<CR>
-
-"nnoremap <F5> :Dispatch ./build.sh && cd bin && ./debug && cd ..<CR>
-"nnoremap <F5> :Dispatch ./build.sh<CR>
 nnoremap <F5> :Make<CR>
 nnoremap <F6> :Make!<CR>
 nnoremap <F7> :Dispatch ./run.sh<CR>
@@ -275,7 +217,7 @@ nnoremap <F8> :Dispatch! ./run.sh<CR>
 tnoremap jk <C-\><C-n>
 
 " quickfix error navigation
-nnoremap <F9> :cc 2<CR>
+nnoremap <F9> :cc 1<CR>
 nnoremap <F10> :cp<CR>
 nnoremap <F11> :cn<CR>
 
@@ -370,9 +312,6 @@ function! s:_ReadMan(man_section, man_word, winpos)
     " Read in the man page for 'man_word' (col -b is for formatting)
     execute ":r!man " . s:man_section . " " . a:man_word . " | col -b"
     execute ":set ft=c"
-    " Go to the first line and delete it
-    execute ":goto"
-    "execute ":delete"
 endfunction
 "command! -nargs=1 Man call <SID>_ReadMan(v:count, expand('<cword>'), 'L')
 command! -nargs=1 Man call <SID>_ReadMan(v:count, expand('<args>'), 'L')
@@ -383,11 +322,33 @@ augroup qf
 	autocmd FileType qf set nobuflisted
 augroup END
 
-" TODO: exclude neovim :terminal from buffer list
-"augroup zsh
-"	autocmd!
-"	autocmd FileType zsh set nobuflisted
-"augroup END
+
+function! s:tags_sink(line)
+  let parts = split(a:line, '\t\zs')
+  let excmd = matchstr(parts[2:], '^.*\ze;"\t')
+  execute 'silent e' parts[1][:-2]
+  let [magic, &magic] = [&magic, 0]
+  execute excmd
+  let &magic = magic
+endfunction
+
+function! s:tags()
+  if empty(tagfiles())
+    echohl WarningMsg
+    echom 'Preparing tags'
+    echohl None
+    call system('ctags -R')
+  endif
+
+  call fzf#run({
+  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
+  \            '| grep -v ^!',
+  \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
+  \ 'down':    '20%',
+  \ 'sink':    function('s:tags_sink')})
+endfunction
+
+command! Tags call s:tags()
 
 
 "
@@ -402,12 +363,6 @@ highlight warn_group ctermbg=11 ctermfg=8
 call matchadd('todo_group', 'TODO\|FIX')
 call matchadd('note_group', 'NOTE')
 call matchadd('warn_group', 'WARNING\|IMPORTANT')
-
-"au BufNewFile,BufRead *.mat set filetype=json
-"au BufNewFile,BufRead *.gui set filetype=json
-"au BufNewFile,BufRead *.trnf set filetype=obj
-"au BufNewFile,BufRead *.prop set filetype=json
-"au BufNewFile,BufRead *.eff set filetype=json
 
 
 "

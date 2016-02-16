@@ -23,9 +23,6 @@ bspc rule -a hscfi floating=on focus=on desktop=1
 
 #bspc config external_rules_command $HOME/.config/bspwm/rules
 
-# pad bar
-bspc config -m HDMI-0 top_padding 20
-
 if [ -f $HOME/.config/envrc ] ; then
 	source $HOME/.config/envrc
 else
@@ -36,11 +33,18 @@ if [ ! -z $SYSTEM ] ; then
 	if [[ "$SYSTEM" == "desktop" ]] ; then
 		bspc monitor DVI-1 -d 1 2 3 4 5
 		bspc monitor HDMI-0 -d 6 7 8 9 10
+		bspc config -m HDMI-0 top_padding 20
+	fi
+
+	if [[ "$SYSTEM" == "laptop_dual" ]] ; then
+		bspc monitor eDP1 -d I II III IV V
+		bspc monitor HDMI1 -d VI VII VIII IX X
+		bspc config -m eDP1 top_padding 20
 	fi
 
 	if [[ "$SYSTEM" == "laptop" ]] ; then
 		bspc monitor eDP1 -d I II III IV V
-		bspc monitor HDMI1 -d VI VII VIII IX X
+		bspc config -m eDP1 top_padding 20
 	fi
 fi
 
