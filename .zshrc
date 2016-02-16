@@ -151,7 +151,14 @@ gitpush()
 
 scrots()
 {
-	cd ~/pic/scrot && scrot -s
+	cd ~/pic/scrot
+	scrot -s
+}
+
+tempscrot()
+{
+    scrot -s /tmp/tempscrot.png
+    gimp /tmp/tempscrot.png
 }
 
 # search for packages following a missing command

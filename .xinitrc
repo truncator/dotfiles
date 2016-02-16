@@ -63,8 +63,7 @@ if [ ! -z $WM ] ; then
 	fi
 
 	if [[ $WM == "bspwm" ]] ; then
-		# bspwm
-		sxhkd &
+		sxhkd -n -f 100 &
 		exec bspwm
 	fi
 fi

@@ -56,6 +56,8 @@ map g# <Plug>(incsearch-nohl-g#)
 " colors
 "
 
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
 syntax enable
 set background=dark
 let base16colorspace=256
@@ -132,7 +134,6 @@ set cino+=(0
 
 set clipboard=unnamed
 
-"set makeprg=./build.sh
 set makeprg=make
 
 filetype on
@@ -190,7 +191,11 @@ nmap <silent> b <Plug>CamelCaseMotion_b
 nmap <silent> e <Plug>CamelCaseMotion_e
 
 " FZF
-nnoremap <C-_> :call fzf#run({'down': '20%', 'sink': 'edit'})<CR>
+function! QuickfixFZF()
+    cclose
+    call fzf#run({'down': '20%', 'sink': 'edit'})
+endfunction
+nnoremap <C-_> :call QuickfixFZF()<cR>
 nnoremap ? :Tags<CR>
 
 " exit from insert to normal mode
@@ -208,7 +213,17 @@ cmap w!! w !sudo tee > /dev/null %
 nnoremap <F10> :set invpaste paste?<CR>
 set pastetoggle=<F10>
 
-nnoremap <F5> :Make<CR>
+function! SetMakePrg()
+    if filereadable("Makefile")
+        set makeprg=make
+    elseif filereadable("build.sh")
+        set makeprg=./build.sh
+    else
+        echoerr "No makefile or build script found."
+    endif
+endfunction
+
+nnoremap <silent> <F5> :call SetMakePrg()<CR> :Make<CR>
 nnoremap <F6> :Make!<CR>
 nnoremap <F7> :Dispatch ./run.sh<CR>
 nnoremap <F8> :Dispatch! ./run.sh<CR>
@@ -313,7 +328,6 @@ function! s:_ReadMan(man_section, man_word, winpos)
     execute ":r!man " . s:man_section . " " . a:man_word . " | col -b"
     execute ":set ft=c"
 endfunction
-"command! -nargs=1 Man call <SID>_ReadMan(v:count, expand('<cword>'), 'L')
 command! -nargs=1 Man call <SID>_ReadMan(v:count, expand('<args>'), 'L')
 
 " exclude quickfix buffer from buffer list
@@ -321,7 +335,6 @@ augroup qf
 	autocmd!
 	autocmd FileType qf set nobuflisted
 augroup END
-
 
 function! s:tags_sink(line)
   let parts = split(a:line, '\t\zs')
@@ -393,7 +406,7 @@ set directory+=~/tmp//
 set directory+=.
 
 " viminfo stores the the state of your previous editing session
-set viminfo+=n~/.vim/viminfo
+set viminfo+=n~/.config/nvim/.viminfo
 
 if exists("+undofile")
 	" undofile - This allows you to use undos after exiting and restarting

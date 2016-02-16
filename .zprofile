@@ -34,7 +34,7 @@ fi
 path=(~/bin $path)
 
 # run mpd if not already running
-[ ! -s ~/.config/mpd/pid ] && mpd ~/.config/mpd
+[ ! -s ~/.config/mpd/pid ] && mpd ~/.config/mpd/mpd.conf
 
 # run startx at login
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec ssh-agent startx
