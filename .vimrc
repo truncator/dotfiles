@@ -15,33 +15,24 @@ augroup END
 
 call plug#begin('~/.vim/bundle')
 
-Plug 'chriskempson/base16-vim'
-"Plug 'jeaye/color_coded'
-Plug 'tikhomirov/vim-glsl'
-Plug 'neovimhaskell/haskell-vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 
-"Plug 'ajh17/vimcompletesme'
-Plug '\~/repos/clone/vim-completion'
+Plug 'chriskempson/base16-vim'
+Plug 'tikhomirov/vim-glsl'
+Plug 'beyondmarc/opengl.vim'
+
+Plug 'tpope/vim-dispatch'
 
 Plug 'ludovicchabant/vim-gutentags'
+
+Plug 'tpope/vim-surround'
 Plug 'haya14busa/incsearch.vim'
 Plug 'bkad/camelcasemotion'
 Plug 'jez/a.vim'
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-
 call plug#end()
-
-let g:ycm_extra_conf_globlist = ['~/repos/*','!~/*']
-let g:ycm_key_list_selection_completion=['<TAB>', '<Down>']
-let g:ycm_key_list_previous_completion=['<S-TAB>', '<Up>']
-
-nnoremap <silent><F4> :OverCommandLine<CR>
-vnoremap <silent><F4> <Esc> :OverCommandLine<CR>
 
 let g:incsearch#auto_nohlsearch=1
 map / <Plug>(incsearch-forward)
@@ -131,17 +122,23 @@ set visualbell       " no beeping
 set noerrorbells     " no beeping
 
 set completeopt-=preview " disable scratch preview
-set completeopt+=longest
+set completeopt+=menu,longest
 
 set cino+=(0
 
 set clipboard=unnamed
 
-set makeprg=make
+set makeprg="make -j4"
 
 filetype on
 filetype plugin on
 filetype indent on
+
+set tags+=./tags;
+set tags+=~/.vim/tags/gl
+set tags+=~/.vim/tags/stdio
+set tags+=~/.vim/tags/stdlib
+set tags+=~/.vim/tags/stdint
 
 
 "
@@ -294,7 +291,6 @@ endfunction
 
 command! Tags call s:tags()
 
-" Move between splits, creating new splits when moving past an edge.
 function! MoveToOrCreateSplit(key)
     let t:curwin = winnr()
     exec "wincmd ".a:key
@@ -306,12 +302,12 @@ function! MoveToOrCreateSplit(key)
         endif
         exec "wincmd ".a:key
     endif
-endfu
+endfunction
 
-nnoremap <silent> <C-h> :call MoveToOrCreateSplit('h')<cr>
-nnoremap <silent> <C-j> :call MoveToOrCreateSplit('j')<cr>
-nnoremap <silent> <C-k> :call MoveToOrCreateSplit('k')<cr>
-nnoremap <silent> <C-l> :call MoveToOrCreateSplit('l')<cr>
+nnoremap <silent> <C-h> :call MoveToOrCreateSplit('h')<CR>
+nnoremap <silent> <C-j> :call MoveToOrCreateSplit('j')<CR>
+nnoremap <silent> <C-k> :call MoveToOrCreateSplit('k')<CR>
+nnoremap <silent> <C-l> :call MoveToOrCreateSplit('l')<CR>
 
 
 "
