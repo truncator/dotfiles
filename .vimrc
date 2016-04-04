@@ -249,9 +249,9 @@ nnoremap <F8> :call RunBinary(1)<CR>
 tnoremap jk <C-\><C-n>
 
 " quickfix error navigation
-nnoremap <F9> :cc 1<CR>
-nnoremap <F10> :cp<CR>
-nnoremap <F11> :cn<CR>
+nnoremap <silent> <F9> :cc 1<CR> <silent> :cn<CR> <silent> :cp<CR>
+nnoremap <silent> <F10> :cp<CR>
+nnoremap <silent> <F11> :cn<CR>
 
 
 "
