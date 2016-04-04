@@ -1,25 +1,24 @@
 #!/bin/sh
 
 bspc config border_width       2
-bspc config window_gap         8
+bspc config window_gap         4
+bspc config split_ratio        0.50
 
-bspc config split_ratio         0.50
-bspc config focus_by_distance   true
+bspc config normal_frame_opacity  0.00
+bspc config focused_frame_opacity 0.05
 
-#bspc config remove_unplugged_monitors true
+bspc config focus_by_distance     true
+bspc config borderless_monocle    true
+bspc config gapless_monocle       false
+bspc config focus_follows_pointer false
+bspc config auto_alternate        false
+bspc config auto_cancel           false
 
 # application rules
-bspc rule -a Clandestine floating=on
 bspc rule -a mpv floating=on
-bspc rule -a gimp floating=on
-bspc rule -a steam floating=on follow=off focus=off
 bspc rule -a snes9x-gtk floating=on
-bspc rule -a Screensaver floating=on
-bspc rule -a zathura floating=on
 bspc rule -a floating floating=on
 bspc rule -a feh floating=on
-bspc rule -a UE4Editor-Linux floating=on
-bspc rule -a hscfi floating=on focus=on desktop=1
 
 #bspc config external_rules_command $HOME/.config/bspwm/rules
 

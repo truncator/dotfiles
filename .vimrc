@@ -24,7 +24,9 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 
-"Plug 'valloric/youcompleteme'
+"Plug 'ajh17/vimcompletesme'
+Plug '\~/repos/clone/vim-completion'
+
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'haya14busa/incsearch.vim'
 Plug 'bkad/camelcasemotion'
@@ -101,12 +103,12 @@ set timeoutlen=500
 set ttimeoutlen=0
 set matchtime=0
 
-" disable line wrapping
 set nowrap
 set textwidth=0
 set wrapmargin=0
 set sidescroll=1
 set sidescrolloff=8
+set synmaxcol=300
 " set formatoptions-=t
 
 set number
@@ -129,6 +131,7 @@ set visualbell       " no beeping
 set noerrorbells     " no beeping
 
 set completeopt-=preview " disable scratch preview
+set completeopt+=longest
 
 set cino+=(0
 
@@ -148,6 +151,7 @@ filetype indent on
 let mapleader = "\<space>"
 
 nnoremap ; :
+nnoremap : ;
 
 " move cursor by screen line, not file line
 nmap j gj
@@ -257,61 +261,6 @@ nnoremap <F11> :cn<CR>
 " Functions
 "
 
-" consolidate vim/tmux split navigation
-if exists('$TMUX')
-	function! TmuxOrSplitSwitch(wincmd, tmuxdir)
-		let previous_winnr = winnr()
-		silent! execute "wincmd " . a:wincmd
-		if previous_winnr == winnr()
-			call system("tmux select-pane -" . a:tmuxdir)
-			redraw!
-		endif
-	endfunction
-
-	let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
-	let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
-	let &t_te = "\<Esc>]2;". previous_title . "\Esc>\\" . &t_te
-
-	nnoremap <silent> <C-h> :call TmuxOrSplitSwitch('h', 'L')<cr>
-	nnoremap <silent> <C-j> :call TmuxOrSplitSwitch('j', 'D')<cr>
-	nnoremap <silent> <C-k> :call TmuxOrSplitSwitch('k', 'U')<cr>
-	nnoremap <silent> <C-l> :call TmuxOrSplitSwitch('l', 'R')<cr>
-else
-	map <C-h> <C-w>h
-	map <C-j> <C-w>j
-	map <C-k> <C-w>k
-	map <C-l> <C-w>l
-endif
-
-function! CppGrep(arg)
-	let l:grep_cmd = "grep -F --color '" . a:arg . "' **/*.hpp **/*.cpp"
-	silent execute l:grep_cmd
-	copen
-endfunction
-command! -nargs=1 Grep call CppGrep('<args>')
-
-function! s:_ReadMan(man_section, man_word, winpos)
-    " If 'man_section' is 0, use empty string instead.
-    " We perform this check because v:count is 0 by default
-    let s:man_section = a:man_section
-    if s:man_section == 0
-        let s:man_section = ''
-    endif
-    " Open a new window
-    execute ":wincmd n"
-    execute ":wincmd " . a:winpos
-    " Make the new window a scratch buffer
-    execute ":setlocal buftype=nofile"
-    execute ":setlocal bufhidden=hide"
-    execute ":setlocal noswapfile"
-    " Don't list the buffer either
-    execute ":setlocal nobuflisted"
-    " Read in the man page for 'man_word' (col -b is for formatting)
-    execute ":r!man " . s:man_section . " " . a:man_word . " | col -b"
-    execute ":set ft=c"
-endfunction
-command! -nargs=1 Man call <SID>_ReadMan(v:count, expand('<args>'), 'L')
-
 " exclude quickfix buffer from buffer list
 augroup qf
 	autocmd!
@@ -344,6 +293,25 @@ function! s:tags()
 endfunction
 
 command! Tags call s:tags()
+
+" Move between splits, creating new splits when moving past an edge.
+function! MoveToOrCreateSplit(key)
+    let t:curwin = winnr()
+    exec "wincmd ".a:key
+    if (t:curwin == winnr())
+        if (match(a:key,'[jk]'))
+            wincmd v
+        else
+            wincmd s
+        endif
+        exec "wincmd ".a:key
+    endif
+endfu
+
+nnoremap <silent> <C-h> :call MoveToOrCreateSplit('h')<cr>
+nnoremap <silent> <C-j> :call MoveToOrCreateSplit('j')<cr>
+nnoremap <silent> <C-k> :call MoveToOrCreateSplit('k')<cr>
+nnoremap <silent> <C-l> :call MoveToOrCreateSplit('l')<cr>
 
 
 "
