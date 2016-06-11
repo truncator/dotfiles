@@ -15,7 +15,8 @@ augroup END
 
 call plug#begin('~/.vim/bundle')
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 Plug 'tpope/vim-fugitive'
 
@@ -24,8 +25,6 @@ Plug 'tikhomirov/vim-glsl'
 Plug 'beyondmarc/opengl.vim'
 
 Plug 'tpope/vim-dispatch'
-
-Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'tpope/vim-surround'
 Plug 'haya14busa/incsearch.vim'
@@ -140,6 +139,11 @@ set tags+=~/.vim/tags/stdio
 set tags+=~/.vim/tags/stdlib
 set tags+=~/.vim/tags/stdint
 
+let g:fzf_command_prefix = 'Fzf'
+let g:fzf_source = 'find . -type f -name (*.hpp -o *.cpp)'
+let g:fzf_layout = { 'window': 'enew' }
+let g:fzf_buffers_jump = 1
+
 
 "
 " Remaps
@@ -148,7 +152,6 @@ set tags+=~/.vim/tags/stdint
 let mapleader = "\<space>"
 
 nnoremap ; :
-nnoremap : ;
 
 " move cursor by screen line, not file line
 nmap j gj
@@ -192,12 +195,9 @@ nmap <silent> b <Plug>CamelCaseMotion_b
 nmap <silent> e <Plug>CamelCaseMotion_e
 
 " FZF
-function! QuickfixFZF()
-    cclose
-    call fzf#run({'down': '20%', 'sink': 'edit'})
-endfunction
-nnoremap <C-_> :call QuickfixFZF()<cR>
-nnoremap ? :Tags<CR>
+nnoremap <C-_> :call fzf#vim#files('', {'source': 'find . -type f -name "*.h" -o -name "*.hpp" -o -name "*.cpp" -o -name "*.vert" -o -name "*.frag"'})<CR>
+"nnoremap <?> :FzfBLines<CR>
+nnoremap <leader>gl :FzfCommits<CR>
 
 " exit from insert to normal mode
 inoremap jk <ESC>
@@ -263,33 +263,6 @@ augroup qf
 	autocmd!
 	autocmd FileType qf set nobuflisted
 augroup END
-
-function! s:tags_sink(line)
-  let parts = split(a:line, '\t\zs')
-  let excmd = matchstr(parts[2:], '^.*\ze;"\t')
-  execute 'silent e' parts[1][:-2]
-  let [magic, &magic] = [&magic, 0]
-  execute excmd
-  let &magic = magic
-endfunction
-
-function! s:tags()
-  if empty(tagfiles())
-    echohl WarningMsg
-    echom 'Preparing tags'
-    echohl None
-    call system('ctags -R')
-  endif
-
-  call fzf#run({
-  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
-  \            '| grep -v ^!',
-  \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
-  \ 'down':    '20%',
-  \ 'sink':    function('s:tags_sink')})
-endfunction
-
-command! Tags call s:tags()
 
 function! MoveToOrCreateSplit(key)
     let t:curwin = winnr()
