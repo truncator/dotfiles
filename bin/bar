@@ -2,9 +2,8 @@
 
 BAR_FIFO="/tmp/bar-fifo"
 
-HEIGHT=18
-UNDERLINE_HEIGHT=1
-#FONT="DejaVu Sans-9.0"
+HEIGHT_BAR=18
+HEIGHT_UNDERLINE=1
 FONT="tamsyn-12"
 COLOR_FG="#ff878b91"
 COLOR_BG="#ff252525"
@@ -26,19 +25,18 @@ bar_info()
                     name="${item#?}"
                     desktop_number=${item:1}
                     case "$item" in
-                        [OFU]*) wm_info=" ${wm_info}%{F$COLOR_ACTIVE}%{+u}${desktop_number}%{-u}   " ;;
-                        [o]*) wm_info=" ${wm_info}%{F$COLOR_INACTIVE_FILLED}${desktop_number}   " ;;
-                        [fu]*) wm_info=" ${wm_info}%{F$COLOR_INACTIVE_EMPTY}${desktop_number}   " ;;
+                        [OFU]*) wm_info="${wm_info}%{F$COLOR_ACTIVE}%{+u}${desktop_number}%{-u}   " ;;
+                        [o]*) wm_info="${wm_info}%{F$COLOR_INACTIVE_FILLED}${desktop_number}   " ;;
+                        [fu]*) wm_info="${wm_info}%{F$COLOR_INACTIVE_EMPTY}${desktop_number}   " ;;
                     esac
                     shift
                 done
-                wm_info="$wm_info       "
                 ;;
         esac
 
         clock="%{F$COLOR_CLOCK}$(date "+%a, %b %d | %-I:%M:%S %p" | awk '{print tolower($0)}') "
 
-        printf "%s\n" "%{l}${title} %{c}${wm_info} %{r}${clock}"
+        printf "%s\n" "%{c}${wm_info} %{r}${clock}"
     done
 }
 
@@ -54,8 +52,7 @@ mkfifo "$BAR_FIFO"
 
 bspc control --subscribe > "$BAR_FIFO" &
 bar_loop > "$BAR_FIFO" &
-#xtitle -sf "T%s" -t 100 > "$BAR_FIFO" &
 
-cat "$BAR_FIFO" | bar_info | lemonbar -p -g 1920x"$HEIGHT"+0+0 -f "$FONT" -F "$COLOR_ACTIVE" -B "$COLOR_BG" -u "$UNDERLINE_HEIGHT" &
+cat "$BAR_FIFO" | bar_info | lemonbar -p -g 1920x"$HEIGHT_BAR"+0+0 -f "$FONT" -F "$COLOR_ACTIVE" -B "$COLOR_BG" -u "$HEIGHT_UNDERLINE" &
 
 wait
