@@ -1,5 +1,6 @@
 [options]
 font = Tamsyn 14px
+#font = DejaVu Sans Mono 9
 
 clickable_url = true
 allow_bold = true
@@ -23,36 +24,41 @@ cursor_blink = on
 cursor_shape = block
 
 [colors]
-# Base16 Ocean
-# Scheme: Chris Kempson (http://chriskempson.com)
+# special
+foreground      = #c5c8c6
+foreground_bold = #c5c8c6
+cursor          = #c5c8c6
+background      = #1d1f21
 
-foreground      = #c0c5ce
-foreground_bold = #c0c5ce
-cursor          = #c0c5ce
-background      = #2b303b
+# black
+color0  = #282a2e
+color8  = #373b41
 
-# 16 color space
-color0  = #2b303b
-color1  = #bf616a
-color2  = #a3be8c
-color3  = #ebcb8b
-color4  = #8fa1b3
-color5  = #b48ead
-color6  = #96b5b4
-color7  = #c0c5ce
-color8  = #65737e
-color9  = #bf616a
-color10 = #a3be8c
-color11 = #ebcb8b
-color12 = #8fa1b3
-color13 = #b48ead
-color14 = #96b5b4
-color15 = #eff1f5
+# red
+color1  = #a54242
+color9  = #cc6666
 
-# 256 color space
-color16 = #d08770
-color17 = #ab7967
-color18 = #343d46
-color19 = #4f5b66
-color20 = #a7adba
-color21 = #dfe1e8
+# green
+color2  = #8c9440
+color10 = #b5bd68
+
+# yellow
+color3  = #de935f
+color11 = #f0c674
+
+# blue
+color4  = #5f819d
+color12 = #81a2be
+
+# magenta
+color5  = #85678f
+color13 = #b294bb
+
+# cyan
+color6  = #5e8d87
+color14 = #8abeb7
+
+# white
+color7  = #707880
+color15 = #c5c8c6
+[colors]

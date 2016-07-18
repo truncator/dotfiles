@@ -2,7 +2,7 @@
 
 bspc config border_width       2
 bspc config window_gap         4
-bspc config split_ratio        0.50
+bspc config split_ratio        0.58
 
 bspc config normal_frame_opacity  0.00
 bspc config focused_frame_opacity 0.05
@@ -14,11 +14,15 @@ bspc config focus_follows_pointer false
 bspc config auto_alternate        false
 bspc config auto_cancel           false
 
+# create new windows on right instead of left
+bspc config initial_polarity      second_child
+
 # application rules
 bspc rule -a mpv floating=on
 bspc rule -a snes9x-gtk floating=on
 bspc rule -a floating floating=on
 bspc rule -a feh floating=on
+bspc rule -a Steam follow=no floating=on
 
 #bspc config external_rules_command $HOME/.config/bspwm/rules
 
@@ -32,7 +36,7 @@ if [ ! -z $SYSTEM ] ; then
 	if [[ "$SYSTEM" == "desktop" ]] ; then
 		bspc monitor DVI-1 -d 1 2 3 4 5
 		bspc monitor HDMI-0 -d 6 7 8 9 10
-		bspc config -m HDMI-0 top_padding 20
+		bspc config -m HDMI-0 top_padding 18
 	fi
 
 	if [[ "$SYSTEM" == "laptop_dual" ]] ; then

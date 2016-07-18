@@ -23,6 +23,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'chriskempson/base16-vim'
 Plug 'tikhomirov/vim-glsl'
 Plug 'beyondmarc/opengl.vim'
+Plug 'owickstrom/vim-colors-paramount'
 
 Plug 'tpope/vim-dispatch'
 
@@ -30,6 +31,8 @@ Plug 'tpope/vim-surround'
 Plug 'haya14busa/incsearch.vim'
 Plug 'bkad/camelcasemotion'
 Plug 'jez/a.vim'
+
+Plug 'w0ng/vim-hybrid'
 
 call plug#end()
 
@@ -49,14 +52,23 @@ map g# <Plug>(incsearch-nohl-g#)
 "
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+"let base16colorspace=256
+"let g:hybrid_custom_term_colors = 1
+"let g:hybrid_reduced_contrast = 1
+"colorscheme hybrid
 
 syntax enable
 set background=dark
-let base16colorspace=256
-colorscheme base16-ocean
+
+colorscheme paramount
 
 " hide ~ on nontext lines
-hi NonText ctermfg=black
+hi! NonText ctermfg=black
+
+hi! StatusLine guifg=#1d1f21 guibg=#707880
+set fillchars+=vert:\|
 
 
 "
@@ -186,8 +198,6 @@ nnoremap <leader>x :w<CR> :bd<CR>
 nnoremap <leader>t :enew<CR>
 nnoremap <leader>q :bp\|bd#<CR>
 nnoremap <leader>l :ls<CR>
-nnoremap H :bprevious<CR>
-nnoremap L :bnext<CR>
 
 " CamelCaseMotion
 nmap <silent> w <Plug>CamelCaseMotion_w
@@ -195,7 +205,7 @@ nmap <silent> b <Plug>CamelCaseMotion_b
 nmap <silent> e <Plug>CamelCaseMotion_e
 
 " FZF
-nnoremap <C-_> :call fzf#vim#files('', {'source': 'find . -type f -name "*.h" -o -name "*.hpp" -o -name "*.cpp" -o -name "*.vert" -o -name "*.frag"'})<CR>
+nnoremap <C-_> :call fzf#vim#files('', {'source': 'find . -type f -name "*.h" -o -name "*.c" -o -name "*.hpp" -o -name "*.cpp" -o -name "*.vert" -o -name "*.frag"'})<CR>
 "nnoremap <?> :FzfBLines<CR>
 nnoremap <leader>gl :FzfCommits<CR>
 
