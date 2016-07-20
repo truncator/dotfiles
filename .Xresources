@@ -1,3 +1,11 @@
+Xft.antialias: true
+Xft.dpi:       96
+Xft.rgba:      rgb
+Xft.lcdfilter: lcddefault
+Xft.autohint:  false
+Xft.hinting:   true
+Xft.hintstyle: hintslight
+
 URxvt*.foreground:   #878b91
 URxvt*.background:   #1d2024
 URxvt*.cursorColor:  #878b91
