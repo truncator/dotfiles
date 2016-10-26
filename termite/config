@@ -24,41 +24,40 @@ cursor_blink = on
 cursor_shape = block
 
 [colors]
-# special
-foreground      = #c5c8c6
-foreground_bold = #c5c8c6
-cursor          = #c5c8c6
-background      = #1d1f21
+foreground      = #959698
+foreground_bold = #959698
+cursor          = #959698
+background      = #1b1b1b
 
 # black
-color0  = #282a2e
-color8  = #373b41
+color0  = #1b1b1b
+color8  = #3b3b3b
 
 # red
-color1  = #a54242
-color9  = #cc6666
+color1  = #6b4242
+color9  = #7b5252
 
 # green
-color2  = #8c9440
-color10 = #b5bd68
+color2  = #586b50
+color10 = #687b60
 
 # yellow
-color3  = #de935f
-color11 = #f0c674
+color3  = #6b6245
+color11 = #7b7255
 
 # blue
-color4  = #5f819d
-color12 = #81a2be
+color4  = #4b556b
+color12 = #5b657b
 
 # magenta
-color5  = #85678f
-color13 = #b294bb
+color5  = #65526b
+color13 = #75627b
 
 # cyan
-color6  = #5e8d87
-color14 = #8abeb7
+color6  = #556b68
+color14 = #657b78
 
 # white
-color7  = #707880
-color15 = #c5c8c6
+color7  = #858788
+color15 = #919394
 [colors]

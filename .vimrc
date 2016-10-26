@@ -51,7 +51,7 @@ map g# <Plug>(incsearch-nohl-g#)
 " colors
 "
 
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 "let base16colorspace=256
@@ -62,7 +62,7 @@ let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 syntax enable
 set background=dark
 
-colorscheme paramount
+colorscheme shblah
 
 " hide ~ on nontext lines
 hi! NonText ctermfg=black
