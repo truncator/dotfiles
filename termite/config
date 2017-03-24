@@ -1,6 +1,7 @@
 [options]
-font = Tamsyn 14px
-#font = DejaVu Sans Mono 9
+#font = Tamsyn 14px
+#font = DejaVu Sans Mono 11
+font = Roboto Mono Regular 11
 
 clickable_url = true
 allow_bold = true
@@ -58,6 +59,5 @@ color6  = #556b68
 color14 = #657b78
 
 # white
-color7  = #858788
-color15 = #919394
-[colors]
+color7  = #707880
+color15 = #c5c8c6

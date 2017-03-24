@@ -4,9 +4,10 @@ BAR_FIFO="/tmp/bar-fifo"
 
 HEIGHT_BAR=18
 HEIGHT_UNDERLINE=1
-FONT="tamsyn-12"
+FONT="Tamsyn-12"
 COLOR_FG="#ff878b91"
 COLOR_BG="#ff252525"
+COLOR_BASE="#ffaaaaaa"
 COLOR_CLOCK="#ffaaaaaa"
 COLOR_ACTIVE="#ffcccccc"
 COLOR_INACTIVE_FILLED="#ff999999"
@@ -22,7 +23,6 @@ bar_info()
                 IFS=":"
                 while [ $# -gt 0 ] ; do
                     item="$1"
-                    name="${item#?}"
                     desktop_number=${item:1}
                     case "$item" in
                         [OFU]*) wm_info="${wm_info}%{F$COLOR_ACTIVE}%{+u}${desktop_number}%{-u}   " ;;
@@ -36,7 +36,16 @@ bar_info()
 
         clock="%{F$COLOR_CLOCK}$(date "+%a, %b %d | %-I:%M:%S %p" | awk '{print tolower($0)}') "
 
-        printf "%s\n" "%{c}${wm_info} %{r}${clock}"
+        battery_state=$(acpi -b | awk -F '[, ]' '{print $3}')
+        battery=""
+        if [[ "$battery_state" == "Charging" ]]; then
+            battery="%{F#ff77dd77}"
+        else
+            battery="%{F$COLOR_CLOCK}"
+        fi
+        battery="$battery$(acpi -b | awk -F '[,]' '{print $2}')"
+
+        printf "%s\n" "%{c}${wm_info} %{r}${battery} %{F$COLOR_BASE}| ${clock}"
     done
 }
 
@@ -50,7 +59,7 @@ trap "trap - TERM; kill 0" INT TERM QUIT EXIT
 [[ -e "$BAR_FIFO" ]] && rm "$BAR_FIFO"
 mkfifo "$BAR_FIFO"
 
-bspc control --subscribe > "$BAR_FIFO" &
+bspc subscribe report > "$BAR_FIFO" &
 bar_loop > "$BAR_FIFO" &
 
 cat "$BAR_FIFO" | bar_info | lemonbar -p -g 1920x"$HEIGHT_BAR"+0+0 -f "$FONT" -F "$COLOR_ACTIVE" -B "$COLOR_BG" -u "$HEIGHT_UNDERLINE" &

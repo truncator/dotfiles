@@ -19,22 +19,20 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-dispatch'
+
+Plug 'junegunn/vim-easy-align'
+Plug 'haya14busa/incsearch.vim'
+Plug 'jez/a.vim'
 
 Plug 'chriskempson/base16-vim'
 Plug 'tikhomirov/vim-glsl'
 Plug 'beyondmarc/opengl.vim'
-Plug 'owickstrom/vim-colors-paramount'
-
-Plug 'tpope/vim-dispatch'
-
-Plug 'tpope/vim-surround'
-Plug 'haya14busa/incsearch.vim'
-Plug 'bkad/camelcasemotion'
-Plug 'jez/a.vim'
-
-Plug 'w0ng/vim-hybrid'
 
 call plug#end()
+
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 let g:incsearch#auto_nohlsearch=1
 map / <Plug>(incsearch-forward)
@@ -54,34 +52,27 @@ map g# <Plug>(incsearch-nohl-g#)
 "let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
-"let base16colorspace=256
-"let g:hybrid_custom_term_colors = 1
-"let g:hybrid_reduced_contrast = 1
-"colorscheme hybrid
-
 syntax enable
 set background=dark
 
-colorscheme shblah
+if filereadable(expand("~/.vimrc_background"))
+    let base16colorspace=256
+    source ~/.vimrc_background
+endif
 
 " hide ~ on nontext lines
 hi! NonText ctermfg=black
-
-hi! StatusLine guifg=#1d1f21 guibg=#707880
-set fillchars+=vert:\|
 
 
 "
 " options
 "
 
-"set nocompatible " use vim settings, not vi
-
-set showmode        " show editor mode
-set mouse=a         " enable mouse if terminal supports it
-set cursorline      " underline current line
-set showcmd         " show command in last line of screen
-set ruler           " display line/col numbers
+set showmode
+set mouse=a
+set cursorline
+set showcmd
+set ruler
 set laststatus=2
 set showtabline=1
 
@@ -92,12 +83,12 @@ set splitright
 
 set tabstop=4
 set shiftwidth=4
-set shiftround " use multiple of shiftwidth when using '>' or '<'
+set shiftround
 set expandtab
 
 set autoindent
 set smartindent
-set copyindent " copy previous indentation
+set copyindent
 
 set timeout
 set nottimeout
@@ -126,7 +117,6 @@ set gdefault  " replace globally on line by default
 
 set history=1000
 set undolevels=1000
-set undofile         " store undo changes in .un file
 set wildignore=*.swp,*.un\~,*.o,*.d
 set title            " change terminal title
 set visualbell       " no beeping
@@ -139,7 +129,7 @@ set cino+=(0
 
 set clipboard=unnamed
 
-set makeprg="make -j4"
+set makeprg="make -j$(nproc)"
 
 filetype on
 filetype plugin on
@@ -163,8 +153,6 @@ let g:fzf_buffers_jump = 1
 
 let mapleader = "\<space>"
 
-nnoremap ; :
-
 " move cursor by screen line, not file line
 nmap j gj
 nmap k gk
@@ -181,48 +169,18 @@ nmap gg gg zz
 " strip all trailing whitespace
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR> 
 
-" select just-pasted text
-nnoremap <leader>v V`]
-
-" use black hole register
-nnoremap <leader>b "_
-
 " edit ~/.vimrc (this file!)
 nnoremap <leader>ev :edit $MYVIMRC<CR>
 
-nnoremap <leader>w :w<CR>
-nnoremap <leader>o :o<CR>
-
-" buffer operations
-nnoremap <leader>x :w<CR> :bd<CR>
-nnoremap <leader>t :enew<CR>
-nnoremap <leader>q :bp\|bd#<CR>
-nnoremap <leader>l :ls<CR>
-
-" CamelCaseMotion
-nmap <silent> w <Plug>CamelCaseMotion_w
-nmap <silent> b <Plug>CamelCaseMotion_b
-nmap <silent> e <Plug>CamelCaseMotion_e
-
 " FZF
-nnoremap <C-_> :call fzf#vim#files('', {'source': 'find . -type f -name "*.h" -o -name "*.c" -o -name "*.hpp" -o -name "*.cpp" -o -name "*.vert" -o -name "*.frag"'})<CR>
-"nnoremap <?> :FzfBLines<CR>
-nnoremap <leader>gl :FzfCommits<CR>
+nnoremap <C-_> :call fzf#vim#files('', {'source': 'find . -type f -name "*.h" -o -name "*.c" -o -name "*.hpp" -o -name "*.cpp" -o -name "*.vert" -o -name "*.frag" -o -name "*.glsl" -o -name "*.lang"'})<CR>
 
 " exit from insert to normal mode
 inoremap jk <ESC>
 
-" prevent delete from overwriting register
-nnoremap x "_x
-
 " switch between header and source files
 nnoremap <leader>h :A<CR>
 nnoremap <leader>H :AV<CR>
-
-cmap w!! w !sudo tee > /dev/null %
-
-nnoremap <F10> :set invpaste paste?<CR>
-set pastetoggle=<F10>
 
 function! SetMakePrg()
     if filereadable("Makefile")
@@ -268,12 +226,6 @@ nnoremap <silent> <F11> :cn<CR>
 " Functions
 "
 
-" exclude quickfix buffer from buffer list
-augroup qf
-	autocmd!
-	autocmd FileType qf set nobuflisted
-augroup END
-
 function! MoveToOrCreateSplit(key)
     let t:curwin = winnr()
     exec "wincmd ".a:key
@@ -293,59 +245,10 @@ nnoremap <silent> <C-k> :call MoveToOrCreateSplit('k')<CR>
 nnoremap <silent> <C-l> :call MoveToOrCreateSplit('l')<CR>
 
 
-"
-" Syntax highlighting
-"
-
-let b:current_syntax = "cpp"
-
-highlight todo_group ctermbg=9 ctermfg=8
-highlight note_group ctermbg=10 ctermfg=8
-highlight warn_group ctermbg=11 ctermfg=8
-call matchadd('todo_group', 'TODO\|FIX')
-call matchadd('note_group', 'NOTE')
-call matchadd('warn_group', 'WARNING\|IMPORTANT')
-
-
-"
-" .un~/.swp directory handling as written here:
-" http://stackoverflow.com/a/9528322/4354008
-"
-
-if isdirectory($HOME . '/.vim/backup') == 0
-	:silent !mkdir -p ~/.vim/backup >/dev/null 2>&1
-endif
-set backupdir-=.
-set backupdir+=.
-set backupdir-=~/
-set backupdir^=~/.vim/backup/
-set backupdir^=./.vim-backup/
-set backup
+set noswapfile
+set nobackup
 set nowritebackup
-
-" Save your swp files to a less annoying place than the current directory.
-" If you have .vim-swap in the current directory, it'll use that.
-" Otherwise it saves it to ~/.vim/swap, ~/tmp or .
-if isdirectory($HOME . '/.vim/swap') == 0
-	:silent !mkdir -p ~/.vim/swap >/dev/null 2>&1
-endif
-set directory=./.vim-swap//
-set directory+=~/.vim/swap//
-set directory+=~/tmp//
-set directory+=.
-
-" viminfo stores the the state of your previous editing session
-set viminfo+=n~/.config/nvim/.viminfo
-
-if exists("+undofile")
-	" undofile - This allows you to use undos after exiting and restarting
-	" This, like swap and backups, uses .vim-undo first, then ~/.vim/undo
-	" :help undo-persistence
-	" This is only present in 7.3+
-	if isdirectory($HOME . '/.vim/undo') == 0
-		:silent !mkdir -p ~/.vim/undo > /dev/null 2>&1
-	endif
-	set undodir=./.vim-undo//
-	set undodir+=~/.vim/undo//
-	set undofile
+if !&diff
+    set undodir=~/.vim/undo
+    set undofile
 endif

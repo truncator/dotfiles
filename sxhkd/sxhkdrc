@@ -5,81 +5,43 @@
 #
 
 super + alt + Escape
-	bspc quit
+    bspc quit
 
-super + w
-	bspc window -c
+super + {_,shift + }w
+    bspc node -{c,k}
 
-super + t
-	bspc desktop -l next
-
-super + b
-	bspc desktop -B
-
-super + {s,f}
-	bspc window -t {floating,fullscreen}
-
-super + {grave,Tab}
-	bspc {window,desktop} -f last
-
-super + apostrophe
-	bspc window -s last
-
-super + {o,i}
-	bspc control --record-history off; \
-	bspc window {older,newer} -f; \
-	bspc control --record-history on
-
-super + y
-	bspc window -w last.manual
+super + {t,shift + t,s,f}
+    bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 super + m
-	bspc window -s biggest
+    bspc desktop -l next
 
 super + {_,shift + }{h,j,k,l}
-	bspc window -{f,s} {left,down,up,right}
+    bspc node -{f,s} {west,south,north,east}
 
 super + {_,shift + }c
-	bspc window -f {next,prev}
+    bspc node -f {next,prev}.local
 
 super + {comma,period}
-	bspc desktop -C {backward,forward}
+    bspc desktop -C {backward,forward}
 
 super + bracket{left,right}
-	bspc desktop -f {prev,next}
+    bspc desktop -f {prev,next}
 
 super + ctrl + {h,j,k,l}
-	bspc window -p {left,down,up,right}
+    bspc node -p {left,down,up,right}
 
-super + ctrl + {_,shift + }space
-	bspc {window -p cancel,desktop -c}
-
+# expand a window by moving one of its side outward
 super + alt + {h,j,k,l}
-	bspc window -e {left -20,down +20,up -20,right +20}
+    bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
+# contract a window by moving one of its side inward
 super + alt + shift + {h,j,k,l}
-	bspc window -e {right -20,up +20,down -20,left +20}
-
-super + ctrl + {1-9}
-	bspc window -r 0.{1-9}
+    bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 super + {_,shift + }{1-9,0}
-	bspc {desktop -f,window -d} ^{1-9,10}
+    bspc {desktop -f,node -d} '^{1-9,10}'
 
-#super + alt + {h,l}
-#	bspc monitor -f {prev,next}
-
-~button1
-	bspc pointer -g focus
-
-super + button{1-3}
-	bspc pointer -g {move,resize_side,resize_corner}
-
-super + !button{1-3}
-	bspc pointer -t %i %i
-
-super + @button{1-3}
-	bspc pointer -u
 
 #
 # wm independent hotkeys
@@ -89,27 +51,24 @@ super + Return
     termite
 
 super + d
-	dmenu_wrapper
+    dmenu_wrapper
 
 # make sxhkd reload its configuration files:
 super + Escape
-	pkill -USR1 -x sxhkd
+    pkill -USR1 -x sxhkd
 
 super + {Left,Right}
-	amixer sset Master {1%-,1%+} unmute
+    amixer sset Master {1%-,1%+} unmute
 
 XF86Audio{Raise,Lower}Volume
-	pactl set-sink-volume 1 {+1%,-1%}
-	pactl set-sink-mute 1 0
-	#amixer sset Master {1+,1-} unmute
+    pactl set-sink-volume 1 {+1%,-1%}
+    pactl set-sink-mute 1 0
+    #amixer sset Master {1+,1-} unmute
 
 XF86AudioMute
-	pactl set-sink-mute 1 toggle
-	#amixer -D pulse set Master toggle
+    pactl set-sink-mute 1 toggle
+    #amixer -D pulse set Master toggle
 
 #XF86MonBrightness{Up,Down}
 super + {Up,Down}
-    sudo brightness {200,-200}
-
-super + alt + Escape
-	bspc quit
+    xbacklight {-inc,-dec} 1

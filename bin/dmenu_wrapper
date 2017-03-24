@@ -6,4 +6,5 @@ if [ $xmouse -lt 1920 ] ; then
 	monitor=1
 fi
 
-dmenu_run -q -i -s $monitor -o 0.95 -dim 0.3 -l 5 -w 400 -h 20 -p \> -x 760 -y 480 -fn "tamsyn-12:normal" -nb "#161616" -nf "#888888" -sb "#334455" -sf "#cccccc"
+#dmenu_run -q -i -s $monitor -o 0.95 -dim 0.3 -l 5 -w 400 -h 20 -p \> -x 760 -y 480 -fn "Roboto Mono" -nb "#161616" -nf "#888888" -sb "#334455" -sf "#cccccc"
+dmenu_run -q -i -s $monitor -o 0.95 -l 5 -w 400 -h 20 -p \> -x 760 -y 480 -fn "Roboto Mono" -nb "#161616" -nf "#888888" -sb "#334455" -sf "#cccccc"

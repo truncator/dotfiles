@@ -1,57 +1,41 @@
 #!/bin/sh
 
 bspc config border_width       2
-bspc config window_gap         4
-bspc config split_ratio        0.58
+bspc config window_gap         0
+bspc config split_ratio        0.50
 
-bspc config normal_frame_opacity  0.00
-bspc config focused_frame_opacity 0.05
-
-bspc config focus_by_distance     true
 bspc config borderless_monocle    true
-bspc config gapless_monocle       false
-bspc config focus_follows_pointer false
-bspc config auto_alternate        false
-bspc config auto_cancel           false
+bspc config gapless_monocle       true
+#bspc config auto_alternate        false
+#bspc config auto_cancel           false
 
 # create new windows on right instead of left
 bspc config initial_polarity      second_child
 
+bspc config pointer_modifier      mod4
+bspc config pointer_action1       move
+bspc config pointer_action2       resize_side
+bspc config focus_follows_pointer false
+bspc config click_to_focus        true
+
 # application rules
-bspc rule -a mpv floating=on
-bspc rule -a snes9x-gtk floating=on
-bspc rule -a floating floating=on
-bspc rule -a feh floating=on
-bspc rule -a Steam follow=no floating=on
+bspc rule -a floating state=floating
+bspc rule -a ds state=floating
+bspc rule -a feh state=floating
+bspc rule -a turry state=floating
+bspc rule -a Steam follow=no
 
 #bspc config external_rules_command $HOME/.config/bspwm/rules
 
-if [ -f $HOME/.config/envrc ] ; then
-	source $HOME/.config/envrc
-else
-	echo "[WARNING] ~/.config/envrc does not exist."
+HOST=$(hostname)
+if [[ "$HOST" == "desktop" ]] ; then
+    bspc monitor DVI-1 -d 1 2 3 4 5
+    bspc monitor HDMI-0 -d 6 7 8 9 10
+    bspc config -m HDMI-0 top_padding 18
+elif [[ "$HOST" == "laptop" ]] ; then
+    bspc monitor eDP1 -d I II III IV V
 fi
 
-if [ ! -z $SYSTEM ] ; then
-	if [[ "$SYSTEM" == "desktop" ]] ; then
-		bspc monitor DVI-1 -d 1 2 3 4 5
-		bspc monitor HDMI-0 -d 6 7 8 9 10
-		bspc config -m HDMI-0 top_padding 18
-	fi
+#compton --config $HOME/.config/compton/compton.conf -b
 
-	if [[ "$SYSTEM" == "laptop_dual" ]] ; then
-		bspc monitor eDP1 -d I II III IV V
-		bspc monitor HDMI1 -d VI VII VIII IX X
-		bspc config -m eDP1 top_padding 20
-	fi
-
-	if [[ "$SYSTEM" == "laptop" ]] ; then
-		bspc monitor eDP1 -d I II III IV V
-		bspc config -m eDP1 top_padding 20
-	fi
-fi
-
-# start compositor
-compton --config $HOME/.config/compton/compton.conf -b
-
-bar &
+#bar &

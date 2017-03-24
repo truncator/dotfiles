@@ -56,6 +56,8 @@ xset r rate 250 45
 
 xsetroot -cursor_name left_ptr
 
+redshift &
+
 # start window manager
 if [ ! -z $WM ] ; then
 	if [[ $WM == "openbox" ]] ; then
@@ -63,7 +65,7 @@ if [ ! -z $WM ] ; then
 	fi
 
 	if [[ $WM == "bspwm" ]] ; then
-		sxhkd -n -f 100 &
+		sxhkd &
 		exec bspwm
 	fi
 fi

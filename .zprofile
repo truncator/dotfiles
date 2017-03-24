@@ -37,4 +37,4 @@ path=(~/bin $path)
 [ ! -s ~/.config/mpd/pid ] && mpd ~/.config/mpd/mpd.conf
 
 # run startx at login
-[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec ssh-agent startx
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec ssh-agent startx > $HOME/.startx.log 2>&1
