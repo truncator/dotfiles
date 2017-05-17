@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pkill bar
+
 BAR_FIFO="/tmp/bar-fifo"
 
 HEIGHT_BAR=18
