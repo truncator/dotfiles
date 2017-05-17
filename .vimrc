@@ -20,6 +20,10 @@ Plug 'tpope/vim-dispatch'
 Plug 'junegunn/vim-easy-align'
 Plug 'jez/a.vim'
 
+Plug 'chriskempson/base16-vim'
+
+Plug 'morhetz/gruvbox'
+
 call plug#end()
 
 xmap ga <Plug>(EasyAlign)
@@ -32,11 +36,19 @@ nmap ga <Plug>(EasyAlign)
 
 syntax enable
 set background=dark
+set termguicolors
 
-if filereadable(expand("~/.vimrc_background"))
-    let base16colorspace=256
-    source ~/.vimrc_background
-endif
+"if filereadable(expand("~/.vimrc_background"))
+"    let base16colorspace=256
+"    source ~/.vimrc_background
+"endif
+
+colorscheme gruvbox
+
+set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
+"set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+"            \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+"            \,sm:block-blinkwait175-blinkoff150-blinkon175
 
 " hide ~ on nontext lines
 hi! NonText ctermfg=black

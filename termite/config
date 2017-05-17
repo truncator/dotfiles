@@ -1,7 +1,5 @@
 [options]
-#font = Tamsyn 14px
-#font = DejaVu Sans Mono 11
-font = Roboto Mono Regular 11
+font = Roboto Mono Regular 10
 
 clickable_url = true
 allow_bold = true
@@ -25,39 +23,40 @@ cursor_blink = on
 cursor_shape = block
 
 [colors]
-foreground      = #959698
-foreground_bold = #959698
-cursor          = #959698
-background      = #1b1b1b
+# hard contrast: background = #1d2021
+background = #282828
+# soft contrast: background = #32302f
+foreground = #ebdbb2
+foreground_bold = #ebdbb2
 
-# black
-color0  = #1b1b1b
-color8  = #3b3b3b
+# dark0 + gray
+color0 = #282828
+color8 = #928374
 
-# red
-color1  = #6b4242
-color9  = #7b5252
+# neutral_red + bright_red
+color1 = #cc241d
+color9 = #fb4934
 
-# green
-color2  = #586b50
-color10 = #687b60
+# neutral_green + bright_green
+color2 = #98971a
+color10 = #b8bb26
 
-# yellow
-color3  = #6b6245
-color11 = #7b7255
+# neutral_yellow + bright_yellow
+color3 = #d79921
+color11 = #fabd2f
 
-# blue
-color4  = #4b556b
-color12 = #5b657b
+# neutral_blue + bright_blue
+color4 = #458588
+color12 = #83a598
 
-# magenta
-color5  = #65526b
-color13 = #75627b
+# neutral_purple + bright_purple
+color5 = #b16286
+color13 = #d3869b
 
-# cyan
-color6  = #556b68
-color14 = #657b78
+# neutral_aqua + faded_aqua
+color6 = #689d6a
+color14 = #8ec07c
 
-# white
-color7  = #707880
-color15 = #c5c8c6
+# light4 + light1
+color7 = #a89984
+color15 = #ebdbb2
