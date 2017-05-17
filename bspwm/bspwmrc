@@ -25,7 +25,7 @@ bspc rule -a feh state=floating
 bspc rule -a turry state=floating
 bspc rule -a Steam follow=no
 
-#bspc config external_rules_command $HOME/.config/bspwm/rules
+bspc config external_rules_command ~/.config/bspwm/rules
 
 HOST=$(hostname)
 if [[ "$HOST" == "desktop" ]] ; then

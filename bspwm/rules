@@ -1,39 +1,20 @@
-#!/bin/sh
-
-out="/tmp/windows"
+#!/bin/bash
 
 wid=$1
 class=$2
 instance=$3
 
-#echo "id $wid" >> $out
-#echo "title $(xtitle $wid)" >> $out
-#echo "class $class" >> $out
-#echo "instance $instance" >> $out
+echo "$instance $wid $class" >> /tmp/bspc_external_rules.log
 
-#xdotool windowmove $(xdotool search --name hscfi) 1920 0
+if [ "$instance" == "termite" ] ; then
+    if [ "$class" == "custom_floating" ] ; then
+        border_size=2
+        width=$(echo "1920 - $border_size*2" | bc)
+        height=$(echo "1080 / 4" | bc)
 
-if [ "$instance" = "hscfi" ] ; then
-	echo "pseudo_tiled=on"
-	echo "split_ratio=0.8"
+        echo "state=floating"
 
-	#num_windows=$(bspc query -T | grep "hscfi.*f" | wc -l)
-	#echo $num_windows >> $out
-
-	#num_windows=$(bspc query -T | grep "hscfi.*f" | wc -l)
-	#if [ $num_windows -eq 0 ] ; then
-	#	bspc window $wid -f
-	#	echo "split_dir=left"
-	#elif [ $num_windows -eq 1 ] ; then
-	#	win=$(bspc query -T | grep "hsfci.*f" | awk '{print $4}' | head -1)
-	#	bspc window $win -f
-	#	echo "split_dir=down"
-	#	echo "TEST" >> $out
-	#fi
-		#win=$(bspc query -T | grep "hsfci.*f" | awk '{print $4}' | head -1)
-	#elif [ $num_windows -eq 2 ] ; then
-		#win=$(bspc query -T | grep "hsfci.*f" | awk '{print $4}' | tail -1)
-	#fi
-	#bspc window $wid -t floating=off pseudo_tiled=on
-	#bspc window $win -f && bspc window -e right -300
+        xdotool windowmove $wid 0 0
+        xdotool windowsize $wid $width $height
+    fi
 fi

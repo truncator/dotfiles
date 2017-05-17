@@ -50,6 +50,9 @@ super + {_,shift + }{1-9,0}
 super + Return
     termite
 
+super + shift + Return
+    termite --class=custom_floating
+
 super + d
     dmenu_wrapper
 
