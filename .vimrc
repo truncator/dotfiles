@@ -84,7 +84,8 @@ set synmaxcol=300
 
 set number
 set relativenumber
-set showmatch
+set noshowmatch
+let loaded_matchparen = 1
 
 set ignorecase
 set smartcase
